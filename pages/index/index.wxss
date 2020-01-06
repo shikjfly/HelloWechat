@@ -134,3 +134,23 @@ input{
   margin: 20px 0;
   border-bottom: 1px solid blue;
 }
+
+.placeholder{
+  font-size: 15px;
+}
+
+button{
+  margin: 30rpx 50rpx;
+  background-color: red;
+  color: white;
+}
+.content{
+  background: #fff;
+  padding: 10px;
+  color: #f00;
+}
+.content-item{
+  padding: 3rpx;
+  font-size: 16px;
+  line-height: 30px;
+}
