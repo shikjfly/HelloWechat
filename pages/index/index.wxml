@@ -1,4 +1,32 @@
 <!--index.wxml-->
+
+<view class="box">
+  <view class="title">变化的三色旗</view>
+  <view class="flex-wrap">
+    <view class="item" style="background-color:{{color1}}"></view>
+    <view class="item" style="background-color:{{color2}}"></view>
+    <view class="item" style="background-color:{{color3}}"></view>
+  </view>
+  <button type="primary" bindtap="changeColor">改变颜色</button>
+</view>
+
+<view class="box" hidden="{{hidden}}">
+  <view class="title">计时器</view>
+  <view class="time">{{numTime}}</view>
+  <view class="btnLayout">
+    <button bindtap="startTime" class="btnTime">开始计时</button>
+    <button bindtap="stopTime" class="btnTime">停止计时</button>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">随机数求和</view>
+  <view>产生随机数的列为：</view>
+  <view wx:for="{{rand}}">{{item}}</view>
+  <view>随机数的和为：{{sumRand}}</view>
+  <button type="default" bindtap="newRand">产生新的随机数</button>
+</view>
+
 <view class="box">
   <view class="title">利用循环语句求和</view>
   <view>

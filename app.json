@@ -1,12 +1,16 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/keyan/keyan",
+    "pages/jiaoxue/jiaoxue",
+    "pages/zixun/zixun",
+    "pages/guanyu/guanyu",
     "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "北方工业大学欢迎您",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",

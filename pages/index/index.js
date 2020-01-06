@@ -1,14 +1,34 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var startN0, endN0,sumN0;
+var startN0, endN0,sumN0,rand, sumRand, timerID;
+var numTime=60;
+function createRand(){
+  rand = [];
+  sumRand = 0;
+  for(var i=0; i<6; i++){
+    var r = (Math.random()*100).toFixed(2)*1;
+    rand.push(r);
+    sumRand += rand[i]
+    console.log(rand[i]);
+  }
+  console.log(sumRand);
+};
+
 Page({
   data:{
-    imgSrc:'/images/test.jpg'
+    imgSrc:'/images/dog.jpg',
+    flag: true,
+    name: '',
+    chinese_score: '',
+    math_score: '',
+    avrage: '',
+    numTime:numTime,
+    hidden:true,
   },
   tapVedio:function(){
     let audio = wx.createInnerAudioContext()
-    audio.src ='/audios/abc.mp3'
+    audio.src ='/audios/dog.mp3'
     audio.play()
   },
   calc:function(e){
@@ -33,13 +53,6 @@ Page({
     this.setData({
       y:y       //将局部变量y赋值给绑定变量y
     })
-  },
-  data:{
-    flag:true,
-    name:'',
-    chinese_score:'',
-    math_score:'',
-    avrage:''
   },
   nameInput: function (e) {
     this.setData({
@@ -81,6 +94,77 @@ Page({
     this.setData({
       sum : sumN0
     })
+  },
+  onLoad: function (options) {
+    createRand();
+    this.setData({
+      rand: rand,
+      sumRand: sumRand
+    });
+    var that=this;
+    setTimeout(()=>{
+      that.show()
+    }, 2000);
+    setInterval(()=>{
+      that.createColor();
+    }, 5000);
+  },
+  newRand: function () {
+    createRand();
+    this.setData({
+      rand: rand,
+      sumRand: sumRand
+    })
+  },
+  show:function(){
+    var that = this;
+    that.setData({
+      hidden:false
+    })
+  },
+  startTime: function () {
+    var that = this;
+    timerID = setInterval(() => {
+      that.timer()
+    }, 1000)
+  },
+  stopTime: function () {
+    clearInterval(timerID)
+  },
+  timer:function(){
+    var that = this;
+    // console.log(numTime);
+    if(numTime>0){
+      that.setData({
+        numTime:numTime--
+      })
+    }else{
+      that.setData({
+        numTime:0
+      })
+    }
+    console.log(numTime);
+  },
+  createColor:function(){
+    var color = [];
+    var letters = '0123456789ABCDEF';
+    for(var i=0; i<3; i++){
+      var c = '#';
+      for(var j=0; j<6; j++){
+        c += letters[Math.floor(Math.random()*16)];
+      }
+      color.push(c);
+    }
+    console.log(color);
+    this.setData({
+      color1: color[0],
+      color2: color[1],
+      color3: color[2]
+    })
+  },
+  changeColor:function(){
+    this.createColor();
   }
+
 
 })

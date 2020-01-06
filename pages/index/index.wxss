@@ -154,3 +154,32 @@ button{
   font-size: 16px;
   line-height: 30px;
 }
+
+.btnLayout{
+  display: flex;
+  flex-direction: row;
+}
+button.btnTime{
+  width: 45%;
+}
+.time{
+  width: 90%;
+  line-height: 200PX;
+  background-color: yellow;
+  color: red;
+  font-size: 100px;
+  text-align: center;
+  border: 1px solid silver;
+  border-radius: 30px;
+  margin: 15px;
+}
+
+.flex-wrap{
+  margin-top: 50rpx;
+  display: flex;
+  flex-direction: row;
+}
+.item{
+  width:200rpx;
+  height: 500rpx;
+}
