@@ -1,4 +1,120 @@
 <!--edu.wxml-->
+<view class="box">
+  <view class="title">模板的定义和引用</view>
+  <import src="template.wxml" />
+  <template is="student" data="{{...stu01}}"></template>
+  ------------------------
+  <template is="student" data="{{...stu02}}"></template>
+  ------------------------
+  <template is="student" data="{{name:'王五', age:25, gender:'男'}}"></template>
+</view>
+
+<view class="box">
+  <view class="title">九九乘法表</view>
+  <view class="con">
+    <view wx:for="{{[1,2,3,4,5,6,7,8,9]}}" wx:for-item="i" wx:key='key'>
+      <view class="inline" wx:for="{{[1,2,3,4,5,6,7,8,9]}}" wx:for-item="j" wx:key='key'>
+        <view wx:if="{{j<=i}}">
+          {{i}} * {{j}} = {{i*j}} 
+          <text decode="{{true}}">&nbsp;</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">列表渲染</view>
+  <view style="margin:20px; text-align:center;">
+    -----------------------------
+    <view>绑定数组渲染</view>
+    --------------
+    <view wx:for='{{arrayList}}'  wx:key='key'>
+      arrayList[{{index}}]:{{item}}
+    </view>
+    -----------------------------
+    <view>直接数组渲染</view>
+    --------------
+    <view wx:for="{{['春', '夏', '秋', '冬']}}"  wx:key='key'>
+      {{index}}:{{item}}
+    </view>
+    -----------------------------
+    <view>对象渲染</view>
+    --------------
+    <view wx:for="{{objectList}}"  wx:key='key'>
+      {{index}}:{{item}}
+    </view>
+    -----------------------------
+    <view>字符串渲染及index和item重命名</view>
+    --------------
+    <view wx:for="杜泽涛" wx:for-index='i' wx:for-item='j'  wx:key='key'>
+      array[{{i}}]:{{j}}
+    </view>
+    -----------------------------
+    <view>利用block渲染多节点结构块</view>
+    --------------
+    <block wx:for="{{[2,1]}}" wx:key='key'>
+      <view class="view-item bc-red">红色</view>
+      <view class="view-item bc-green">绿色</view>
+      <view class="view-item bc-blue">蓝色</view>
+    </block>    
+    -----------------------------
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">成绩等级计算器</view>
+  <view>请输入您的考试成绩</view>
+  <input bindblur="scoreInput" placeholder="在此输入成绩" class="scoreInput"></input>  
+  <view wx:if='{{score>100 || score<0}}'>成绩输入有误！</view> 
+  <view wx:elif='{{score>=90}}'>成绩等级：优秀</view>
+  <view wx:elif='{{score>=80}}'>成绩等级：良好</view>
+  <view wx:elif='{{score>=70}}'>成绩等级：中等</view>
+  <view wx:elif='{{score>=60}}'>成绩等级：及格</view>
+  <view wx:else>成绩等级：不合格</view>
+</view>
+
+<view class="box">
+  <view class="title">条件渲染</view>
+  <view style="margin:20px; text-align:center;">
+    利用view中的wx:if进行条件渲染
+    <view wx:if="{{colorIF=='red'}}">红色</view>
+    <view wx:if="{{colorIF=='green'}}">绿色</view>
+    <view wx:if="{{colorIF=='blue'}}">蓝色</view>
+    <view wx:else>其它颜色</view>
+    <view class="view-item" style="background-color:{{colorIF}}"></view>
+  </view>
+  <view style="margin:20px; text-align:center;">
+    利用block中的wx:if进行条件渲染
+    <block wx:if="{{lengthIF>10}}">
+      <view class="view-item bc-red">红色</view>
+      <view class="view-item bc-green">绿色</view>
+      <view class="view-item bc-blue">蓝色</view>
+    </block>
+  </view>  
+</view>
+
+<view class="box">
+  <view class="title">变量模块化示例</view>
+  <view>全局变量：{{msg1}}</view>
+  <view>全局函数：{{msg2}}</view>
+  <view>本文件变量：{{msg3}}</view>
+  <view>本文件函数：{{msg4}}</view>
+  <view>其它模块变量：{{msg5}}</view>
+  <view>其它模块函数：{{msg6}}</view>
+</view>
+
+<view class="box">
+  <view class="title">数据绑定示例</view>
+  <view>算术运算绑定：{{a}} + {{b}} + {{c}} = {{a+b+c}}</view>
+  <view>对象绑定-学号：{{Student.studID}}</view>
+  <view>对象绑定-姓名：{{Student.name}}</view>
+  <view>对象绑定-生日：{{Student.birthday}}</view>
+  <view>数组绑定-array[0]:{{array[0]}}</view>
+  <view>数组绑定-array[1]:{{array[1]}}</view>
+  <view>数组绑定-array[2]:{{array[2]}}</view>
+  <button type="primary" bindtap="modify">修改绑定数据</button>
+</view>
 
 <view class="box">
   <view class="title">变化的三色旗</view>
@@ -22,7 +138,7 @@
 <view class="box">
   <view class="title">随机数求和</view>
   <view>产生随机数的列为：</view>
-  <view wx:for="{{rand}}">{{item}}</view>
+  <view wx:for="{{rand}}" wx:key="key">{{item}}</view>
   <view>随机数的和为：{{sumRand}}</view>
   <button type="default" bindtap="newRand">产生新的随机数</button>
 </view>

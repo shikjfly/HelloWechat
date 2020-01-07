@@ -11,6 +11,7 @@
 		"newFeature": true,
 		"autoAudits": false,
 		"coverView": true,
+    "checkSiteMap": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false
 	},
