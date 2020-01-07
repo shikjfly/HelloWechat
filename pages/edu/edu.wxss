@@ -1,0 +1,185 @@
+/**edu.wxss**/
+.fontStyle{
+  font-family: cursive;
+  font-size: 25px;
+  font-style: italic;
+  font-weight: bold;
+}
+.textStyle01{
+  color: red;
+  letter-spacing: 10px;
+  text-indent: 50px;
+  text-decoration: underline;
+  text-decoration-color: #00f;
+  line-height: 30px;
+  white-space: normal;
+}
+.textStyle02{
+  text-align: justify;
+  word-spacing: 20px;
+  text-transform: uppercase;
+  white-space: pre-wrap;
+}
+.boxModel01{
+  width: 80%;
+  height: 100px;
+  background-color: yellow;
+  border: 3px dashed #FF0000;
+  padding: 20px;
+  margin: 20px;
+}
+.boxModel02{
+  width: 80%;
+  height: 100px;
+  border: 5px solid rgb(0, 255, 0);
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+.boxModel03{
+  width: 80%;
+  height: 120px;
+  border: 5px dotted rgba(0, 0, 255, 0.3);
+  padding-left: 20px;
+  margin: 0 20px;
+}
+
+navigator{
+  margin: 5px;
+  font-size: 20px;
+}
+.waikuang{
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0px;
+  padding: 5px 0px;
+}
+.myleft{
+  margin-right: 0px;
+}
+.mycenter{
+  flex:1;
+}
+.myright{
+  width: 30rpx;
+  height: 20px;
+  margin-top: 5px;
+}
+
+
+.bg1{
+  height: 240px;
+  width: 200px;
+  margin: 10px auto;
+}
+.box1{
+  width: 100px;
+  height: 80px;
+  background-color: red;
+  margin: 0 auto;
+}
+.box2{
+  width: 100px;
+  height: 80px;
+  background-color: yellow;
+  float: left;
+}
+.box3{
+  width: 100px;
+  height: 80px;
+  background-color: gold;
+  float: right;
+}
+.box4{
+  width: 100px;
+  height: 80px;
+  background-color: greenyellow;
+  margin: 0 auto;
+  clear: both;
+}
+
+.bg2{
+  height: 400rpx;
+  text-align: center;
+  margin: 10px auto;
+}
+.header{
+  line-height: 100rpx;
+  background-color: red;
+}
+.leftBar{
+  width: 20%;
+  line-height: 200rpx;
+  background-color: yellow;
+  float: left;
+}
+.main{
+  width: 60%;
+  line-height: 200rpx;
+  background-color: rgb(157, 255, 0);
+  float: left;
+}
+.rightBar{
+  width: 20%;
+  line-height: 200rpx;
+  background-color: yellow;
+  float: right;
+}
+.footer{
+  line-height: 100rpx;
+  background-color: red;
+  clear: both;
+}
+
+input{
+  margin: 20px 0;
+  border-bottom: 1px solid blue;
+}
+
+.placeholder{
+  font-size: 15px;
+}
+
+button{
+  margin: 30rpx 50rpx;
+  background-color: red;
+  color: white;
+}
+.content{
+  background: #fff;
+  padding: 10px;
+  color: #f00;
+}
+.content-item{
+  padding: 3rpx;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+.btnLayout{
+  display: flex;
+  flex-direction: row;
+}
+button.btnTime{
+  width: 45%;
+}
+.time{
+  width: 90%;
+  line-height: 200PX;
+  background-color: yellow;
+  color: red;
+  font-size: 100px;
+  text-align: center;
+  border: 1px solid silver;
+  border-radius: 30px;
+  margin: 15px;
+}
+
+.flex-wrap{
+  margin-top: 50rpx;
+  display: flex;
+  flex-direction: row;
+}
+.item{
+  width:200rpx;
+  height: 500rpx;
+}

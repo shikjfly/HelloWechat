@@ -1,0 +1,188 @@
+<!--edu.wxml-->
+
+<view class="box">
+  <view class="title">变化的三色旗</view>
+  <view class="flex-wrap">
+    <view class="item" style="background-color:{{color1}}"></view>
+    <view class="item" style="background-color:{{color2}}"></view>
+    <view class="item" style="background-color:{{color3}}"></view>
+  </view>
+  <button type="primary" bindtap="changeColor">改变颜色</button>
+</view>
+
+<view class="box" hidden="{{hidden}}">
+  <view class="title">计时器</view>
+  <view class="time">{{numTime}}</view>
+  <view class="btnLayout">
+    <button bindtap="startTime" class="btnTime">开始计时</button>
+    <button bindtap="stopTime" class="btnTime">停止计时</button>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">随机数求和</view>
+  <view>产生随机数的列为：</view>
+  <view wx:for="{{rand}}">{{item}}</view>
+  <view>随机数的和为：{{sumRand}}</view>
+  <button type="default" bindtap="newRand">产生新的随机数</button>
+</view>
+
+<view class="box">
+  <view class="title">利用循环语句求和</view>
+  <view>
+    <input placeholder="请输入起点数值" placeholder-class="placeholder" bindblur="startNum" type="number"></input>
+    <input placeholder="请输入终点数值" placeholder-class="placeholder" bindblur="endNum" type="number"></input>  
+  </view>
+  <view>两数之间的和为：{{sum}}</view>
+  <button type="primary" bindtap="calcSum">求和</button>
+</view>
+
+<view class="box">
+  <view class="title">成绩计算器</view>
+  <input placeholder="请输入您的名字" placeholder-class="placeholder" bindinput="nameInput"></input>
+  <input placeholder="请输入语文成绩" placeholder-class="placeholder" bindinput="chineseInput" type="number"></input>
+  <input placeholder="请输入数学成绩" placeholder-class="placeholder" bindinput="mathInput" type="number"></input>  
+  <button bindtap="mysubmit">提交</button>
+  <view hidden="{{flag}}" class="content">
+    <view class="content-item">姓名：{{name}}</view>
+    <view class="content-item">语文成绩：{{chinese_score}}</view>
+    <view class="content-item">数学成绩：{{math_score}}</view>
+    <view class="content-item">平均分：{{avrage}}</view>
+  </view>  
+</view>
+
+<view class="box">
+  <view class="title">条件语句和数学函数</view>
+  <view>
+    <input placeholder="请输入x的值" bindblur="calcNum"></input>
+  </view>
+  <view>计算y的值为：{{y}}</view>
+</view>
+
+<view class="box">
+  <view class="title">摄氏温度转华氏温度</view>
+  <view>
+    <input placeholder="请输入摄氏温度" type="digit" bindblur="calc"></input>
+  </view>
+  <view>华氏温度为：{{F}}</view>
+</view>
+
+<view class="box">
+  <view class="title">Float页面布局</view>
+  <view class="bg1">
+    <view class="box1">box1</view>
+    <view class="box2">box2</view>
+    <view class="box3">box3</view>
+    <view class="box4">box4</view>
+  </view>
+  <view class="bg2">
+    <view class="header">header</view>
+    <view class="leftBar">leftBar</view>
+    <view class="main">main</view>
+    <view class="rightBar">rightBar</view>
+    <view class="footer">footer</view>
+  </view>
+
+</view>
+
+<view class="box">
+  <view class="title">导航与布局</view>
+  <navigator url="pages/index">
+    <view class="waikuang">
+      <icon type="success" class="myleft"></icon>
+      <view class="mycenter">Incluede</view>
+      <image src="/images/right-arrow.png" class="myright"></image>
+    </view>
+  </navigator>
+</view>
+
+<view class="box">
+  <view class="title">页面布局示例</view>
+  <view style="display:flex; text-align:center; line-height:80rpx;">
+    <view style="background-color:red; flex-grow:1;">1</view>
+    <view style="background-color:green; flex-grow:1;">2</view>
+    <view style="background-color:blue; flex-grow:1;">3</view>
+  </view>
+  =============
+  <view style="display:flex; text-align:center; height:300rpx;">
+    <view style="background-color:red; width:350rpx;line-height:300rpx;">1</view>
+    <view style="display:flex; flex-direction:column; flex-grow:1;line-height:150rpx;">
+      <view style="background-color:green; flex-grow:1;">2</view>
+      <view style="background-color:blue; flex-grow:1;">3</view>
+    </view>
+  </view>
+  ===============
+  <view style="display:flex; flex-direction:column; text-align:center; ">
+    <view style="background-color:red; height:100rpx;line-height:100rpx;">1</view>
+    <view style="display:flex;  flex-direction:row; flex-grow:1;">
+      <view style="background-color:green; flex-grow:1; height:200rpx;line-height:200rpx;">2</view>
+      <view style="background-color:blue; flex-grow:1;height:200rpx;line-height:200rpx;">3</view>
+    </view>
+  </view>
+
+</view>
+
+
+<view class="box">
+  <view class="title">盒模型</view>
+  <view class="boxModel01">
+    .boxModel01{
+      width: 80%;
+      height: 100px;
+      background-color: yellow;
+      border: 3px dashed #FF0000;
+      padding: 20px;
+      margin: 20px;
+    }
+  </view>
+  <view class="boxModel02">
+    .boxModel02{
+      width: 80%;
+      height: 100px;
+      border: 5px solid rgb(0, 255, 0);
+      padding-top: 20px;
+      margin-bottom: 20px;
+    }
+  </view>
+  <view class="boxModel03">
+    .boxModel03{
+      width: 80%;
+      height: 120px;
+      border: 5px dotted rgba(0, 0, 255, 0.3);
+      padding-left: 20px;
+      margin: 0 20px;
+    }
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">图片和声音</view>
+  <view style="text-align:center">
+    <image src="{{imgSrc}}" bindtap="tapVedio"></image>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">文本样式设置</view>
+  <view class="textStyle01">
+    文本属性可以定义文本的外观。通过设置文本属性，您可以改变文本的颜色、字符间距、对齐文本、装饰文本、对文本进行缩进，等等
+  </view>
+    ===============
+  <view class="textStyle02">
+    You can create a query with a parameter placeholders in the WHERE clause, which will be filled with i...”
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">字体样式设置</view>  
+  <view style="font-family:'cursive';font-size:30px;">
+    <view>利用Style设置字体样式：</view>
+    <view>字体：sans-serif：30px</view>
+  </view>
+  ===============
+  <view class="fontStyle">
+    <view>利用class设置字体样式：</view>
+    <view>字体：Cursive、25px、倾斜、加粗</view>
+  </view>
+</view>
+
