@@ -1,7 +1,7 @@
 //edu.js
 //获取应用实例
 const app = getApp();
-var startN0, endN0, sumN0, rand, sumRand, timerID;
+var startN0, endN0, sumN0, rand, sumRand, timerID, RMB;
 var numTime = 60;
 function createRand() {
   rand = [];
@@ -69,7 +69,20 @@ Page({
       age: 20,
       gender: '女'
     },
+    myFontSize:'25px',
+    red:50,
+    green:100,
+    blue:150,
+    transparency:1,
+    background: ['bc-red', 'bc-green', 'bc-blue'],
+    indicatorDots:true,
+    autoplay: false,
+    circular:false,
+    vertical:false,
+    interval:2000,
+    duration:500,
   },
+
   tapVedio: function () {
     let audio = wx.createInnerAudioContext()
     audio.src = '/audios/dog.mp3'
@@ -228,9 +241,116 @@ Page({
     this.setData({
       score: e.detail.value
     })
-  }
-
-
+  },
+  calcMoney: function (e) {
+    RMB = parseInt(e.detail.value.moneny);
+    this.setData({
+      USD: (RMB / 6.8801).toFixed(4),
+      KRW: (RMB / 8.7873).toFixed(4),
+      HKD: (RMB / 0.8805).toFixed(4),
+      EUR: (RMB / 7.8234).toFixed(4),
+      KOREA: (RMB / 0.0061).toFixed(4),
+      JAY: (RMB / 0.0610).toFixed(4),
+    })
+  },
+  reset: function (e) {
+    this.setData({
+      USD: '',
+      KRW: '',
+      HKD: '',
+      EUR: '',
+      KOREA: '',
+      JAY: '',
+      triangleArea:'',
+    })
+  },
+  calcArea: function (e) {
+    var aArea = parseInt(e.detail.value.aArea);
+    var bArea = parseInt(e.detail.value.bArea);
+    var cArea = parseInt(e.detail.value.cArea);
+    var triangleArea;
+    if (aArea + bArea <= cArea || aArea + cArea <= bArea || cArea + bArea <= aArea){
+      wx.showToast({
+        title: '三角形的两边之和小于第三边！',
+        icon:'none',
+        duration:2000,
+      });
+      this.clear();
+      return;
+    }else{
+      var sArea= (aArea+bArea+cArea)/2;
+      triangleArea = Math.sqrt(sArea * (sArea - aArea) * (sArea - bArea) * (sArea - cArea) );
+    }
+    this.setData({
+      triangleArea: triangleArea,
+    })
+  },
+  clear:function(){
+    this.setData({
+      aArea: '',
+      bArea: '',
+      cArea: '',
+      triangleArea:'',
+    })
+  },
+  radioChange: function (e) {
+    console.log(e.detail.value);
+    this.setData({
+      myFontSize: e.detail.value,
+    })
+  },
+  checkboxChange: function (e) {
+    console.log(e.detail.value);
+    var text=[];
+    var myBold='';
+    var myItalic='';
+    var myUnderline='';
+    text = e.detail.value;
+    for (var i = 0; i < text.length; i++) {
+      if (text[i] == 'isBold') {
+        myBold = 'bold';
+      }
+      if (text[i] == 'isItalic') {
+        myItalic = 'italic';
+      }
+      if (text[i] == 'isUnderline') {
+        myUnderline = 'underline';
+      }
+    }
+    this.setData({
+      myBold: myBold,
+      myItalic: myItalic,
+      myUnderline: myUnderline,
+    })
+  },
+  colorChanging:function(e){
+    let color = e.currentTarget.dataset.color;
+    let value = e.detail.value;
+    console.log(color, value);
+    this.setData({
+      [color]:value
+    });
+  },
+  changeIndicatorDots: function (e) {
+    this.setData({
+      indicatorDots: !this.data.indicatorDots
+    })
+  },
+  changeAutoplay: function (e) {
+    this.setData({
+      autoplay: !this.data.autoplay
+    })
+  },
+  changeCircular: function (e) {
+    this.setData({
+      circular: !this.data.circular
+    })
+  },
+  changeVertical: function (e) {
+    this.setData({
+      vertical: !this.data.vertical
+    })
+  },
 
 
 })

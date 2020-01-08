@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/us/us",
     "pages/edu/edu",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/us/us"
   ],
   "window": {
     "backgroundTextStyle": "light",

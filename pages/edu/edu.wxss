@@ -158,6 +158,7 @@ button{
 .btnLayout{
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 button.btnTime{
   width: 45%;
@@ -189,12 +190,18 @@ button.btnTime{
 }
 .bc-red{
   background-color: red;
+  width: 100%;
+  height: 150px;
 }
 .bc-green{
   background-color: green;
+  width: 100%;
+  height: 150px;
 }
 .bc-blue{
   background-color: blue;
+  width: 100%;
+  height: 150px;
 }
 .scoreInput{
   margin-top: 20px;
@@ -206,4 +213,21 @@ button.btnTime{
 .inline{
   display: inline-block;
   font-size: 16rpx;
+}
+
+.textLayout{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  line-height: 40px;
+}
+radio,checkbox{
+  margin: 20rpx 0rpx 10rpx 10rpx;
+}
+.colorArea{
+  width: 335px;
+  height: 100px;
 }

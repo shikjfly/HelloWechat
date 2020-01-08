@@ -1,5 +1,94 @@
 <!--edu.wxml-->
 <view class="box">
+  <view class="title">Swiper and Switch</view>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{background}}" wx:key="index">
+      <swiper-item>
+        <view class="{{item}}"></view>      
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="waikuang">
+    <text class="myLeft">指示点</text>
+    <switch checked="{{indicatorDots}}" bindchange="changeIndicatorDots"></switch>
+  </view>
+  <view class="waikuang">
+    <text class="myLeft">自动播放</text>
+    <switch checked="{{autoplay}}" bindchange="changeAutoplay"></switch>
+  </view>
+  <view class="waikuang">
+    <text class="myLeft">衔接滑动</text>
+    <switch checked="{{circular}}" bindchange="changeCircular"></switch>
+  </view>
+  <view class="waikuang">
+    <text class="myLeft">竖向</text>
+    <switch checked="{{vertical}}" bindchange="changeVertical"></switch>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">滑动条和颜色</view>
+  <text>红色滑动条</text>
+  <slider data-color="red" value="{{red}}" max="255" block-color="red" show-value="true" bindchange="colorChanging"></slider>
+  <text>绿色滑动条</text>
+  <slider data-color="green" value="{{green}}" max="255" block-color="green" show-value="true" bindchange="colorChanging"></slider>
+  <text>蓝色滑动条</text>
+  <slider data-color="blue" value="{{blue}}" max="255" block-color="blue" show-value="true" bindchange="colorChanging"></slider>
+  <text>透明度滑动条</text>
+  <slider data-color="transparency" value="{{transparency}}" max="1" step="0.01" block-color="purple" show-value="true" bindchange="colorChanging"></slider>
+  <view class="colorArea" style="background-color:rgba({{red}}, {{green}}, {{blue}},  {{transparency}})"></view>
+</view>
+
+<view class="box">
+  <view class="title">修改字体样式和大小</view>
+  <text style="font-weight:{{myBold}}; font-style:{{myItalic}}; text-decoration:{{myUnderline}}; font-size:{{myFontSize}}">微EAM工业云平台xx</text>
+  <checkbox-group bindchange="checkboxChange">
+    <checkbox value="isBold">加粗</checkbox>
+    <checkbox value="isItalic">斜线</checkbox>
+    <checkbox value="isUnderline">下划线</checkbox>
+  </checkbox-group>
+  <radio-group bindchange="radioChange">
+    <radio value="15px">15px</radio>
+    <radio value="25px" checked="true">25px</radio>
+    <radio value="35px">35px</radio>
+  </radio-group>
+</view>
+
+<view class="box">
+  <view class="title">三角形面积计算器</view>
+  <form bindsubmit="calcArea" bindreset="reset">
+    输入三角形的三条边长：
+    <input name="aArea" placeholder="第1条边长" type="digit" ></input> 
+    <input name="bArea" placeholder="第2条边长" type="digit" ></input> 
+    <input name="cArea" placeholder="第3条边长" type="digit" ></input> 
+    <view class="btnLayout">
+      <button type="primary" form-type="submit" class="btnTime">计算</button>  
+      <button type="default" form-type="reset" class="btnTime">清除</button>    
+    </view>
+    <text>三角形的面积为：{{triangleArea}}</text>    
+  </form>
+</view>
+
+<view class="box">
+  <view class="title">货品兑换</view>
+  <form bindsubmit="calcMoney" bindreset="reset">
+    <input name="moneny" placeholder="请输入人民币金额" type="number"></input>
+    <view class="btnLayout">
+      <button type="primary" form-type="submit" class="btnTime">计算</button>
+      <button type="info" form-type="reset" class="btnTime">清除</button>
+    </view>
+    <view class="textLayout">
+      <text>兑换美元为：{{USD}}</text>
+      <text>兑换英镑为：{{KRW}}</text>
+      <text>兑换港币为：{{HKD}}</text>
+      <text>兑换欧元为：{{EUR}}</text>
+      <text>兑换韩元为：{{KOREA}}</text>
+      <text>兑换日元为：{{JAY}}</text>
+    </view>
+  </form>
+</view>
+
+<view class="box">
   <view class="title">模板的定义和引用</view>
   <import src="template.wxml" />
   <template is="student" data="{{...stu01}}"></template>
