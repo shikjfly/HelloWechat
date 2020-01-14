@@ -1,5 +1,244 @@
 <!--edu.wxml-->
 <view class="box">
+  <view class="title">文件操作</view>
+  <image src="{{imgFilePath}}"></image>
+  <view class="btnLayout">
+    <button bindtap="openFile" type="primary">打开文件</button>
+    <button bindtap="saveFile" type="primary">保存文件</button>
+  </view>
+  <view class="btnLayout">
+    <button bindtap="getSavedFileInfo" type="primary">文件信息</button>
+    <button bindtap="removedSavedFile" type="primary">删除文件</button>
+  </view>
+  <view class="fileInfo" hidden="{{hidden}}">
+    <text>{{msgFile}}</text>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">位置和地图</view>
+  <view>
+    <map id="myMap" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" show-location></map>
+  </view>
+  <view class="btnLayout">
+    <button bindtap="chooseLocation" type="primary">选择位置</button>
+    <button bindtap="openLocation" type="primary">打开位置</button>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">照相和摄像</view>
+  <view>
+    <button type="primary" bindtap="chooseImage">获取图片</button>
+    <image mode="scaleToFill" src="{{imgPath}}"></image>
+    <button type="primary" bindtap="chooseVideo">获取视频</button>
+    <video class="video" src="{{videoPath}}"></video>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">动画演示</view>
+  <view class="animation-area">
+    <view class="animation-element" animation="{{animation}}"></view>
+  </view>
+  <view class="btn-row">
+    <button bindtap="rotateAnimation" style="width:24%">旋转</button>
+    <button bindtap="scaleAnimation" style="width:24%">缩放</button>
+    <button bindtap="translateAnimation" style="width:24%">移动</button>
+    <button bindtap="skewAnimation" style="width:24%">倾斜</button>
+  </view>
+  <view class="btn-row">
+    <button bindtap="rotateAndScaleAnimation" style="width:48%">旋转并缩放</button>
+    <button bindtap="rotateThenScaleAnimation" style="width:48%">旋转后缩放</button>
+  </view>
+  <view class="btn-row">
+    <button bindtap="allAnimation" style="width:48%">同时展示全部</button>
+    <button bindtap="allInQueueAnimation" style="width:48%">顺序展示全部</button>
+  </view>
+  <view>
+    <button bindtap="resetAnimation" style="width:96%">还原</button>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">自由绘图</view>
+  <canvas canvas-id="myCanvasFree" disable-scroll="true" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd"  class="myCanvas"></canvas>
+  <view class="btnLayout">
+    <view class="toolStyle" hover-class="changeBc" bindtap="penSelect" data-param="5">钢笔</view>
+    <view class="toolStyle" hover-class="changeBc" bindtap="penSelect" data-param="15">毛笔</view>
+    <view class="toolStyle" hover-class="changeBc" bindtap="colorSelect" data-param="red">红色</view>
+    <view class="toolStyle" hover-class="changeBc" bindtap="colorSelect" data-param="blue">蓝色</view>
+    <view class="toolStyle" hover-class="changeBc" bindtap="clearFree">清除</view>
+    <view class="toolStyle" hover-class="changeBc" bindtap="clearAllFree">清屏</view>
+  </view> 
+</view>
+
+<view class="box">
+  <view class="title">绘制正弦曲线</view>
+  <canvas canvas-id="myCanvasSins"></canvas>
+</view>
+
+<view class="box">
+  <view class="title">变形</view>
+  <canvas canvas-id="myCanvasTrans"  class="myCanvas"></canvas>
+  <view class="btnLayout">
+    <button type="primary" bindtap="drawRectTrans">绘图</button>
+    <button type="primary" bindtap="scaleTrans">放大</button>
+    <button type="primary" bindtap="translateTrans">移动</button>
+    <button type="primary" bindtap="rotateTrans">旋转</button>
+  </view> 
+</view>
+
+<view class="box">
+  <view class="title">参数绘图</view>
+  <canvas canvas-id="myCanvasParm"  class="myCanvas"></canvas>
+  <view>
+    <form bindsubmit="drawCircleParm" bindreset="clearParm">
+      <input name="xParm" placeholder="请输入圆形x的坐标"></input>
+      <input name="yParm" placeholder="请输入圆形y的坐标"></input>
+      <input name="radiusParm" placeholder="请输入圆形的半径"></input>
+      <view class="btnLayout">
+        <button type="primary" form-type="submit">画圆</button>
+        <button type="primary" form-type="reset">清空</button>
+      </view>
+    </form>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">基本绘图</view>
+  <view>
+    <canvas canvas-id="myCanvas" class="myCanvas"></canvas>
+  </view>
+  <view class="btnLayoutCanvas">
+    <button type="primary" bindtap="clearCanvas">清除</button>
+    <button type="primary" bindtap="drawDotCanvas">画点</button>
+    <button type="primary" bindtap="drawCircleCanvas">画圆</button>
+  </view>
+  <view class="btnLayoutCanvas">
+    <button type="primary" bindtap="drawDashCanvas">画虚线</button>
+    <button type="primary" bindtap="capAndJoinCanvas">端点交点</button>
+    <button type="primary" bindtap="drawTextCanvas">画字</button>
+  </view>
+  <view class="btnLayoutCanvas">
+    <button type="primary" bindtap="circularCanvas">圆形渐变</button>
+    <button type="primary" bindtap="shadowRectCanvas">阴影矩形</button>
+    <button type="primary" bindtap="translucentCanvas">半透明</button>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">阶乘计算器</view>
+  <input type="number" bindinput="getFacInput" placeholder="请输入要求阶乘的数"></input>
+  <text>结果为：{{facResult}}</text>
+  <view style="text-align: center; font-size:12px; text-decoration:underline; font-style:italic;">
+    <text>输入数字，然后摇一摇得出计算结果</text>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">变脸游戏</view>
+  <view class="imgLayout">
+    <image src="{{imgFaceArray[indexFace]}}" bindtap="changeFace" mode="widthFix" class="image"></image>
+  </view>
+  <view style="text-align: center; font-size:12px; text-decoration:underline; font-style:italic;">
+    <text>点击变脸/摇一摇变脸</text>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">考试场次选择</view>
+  <view class="hr"></view>
+  <form bindsubmit="formSubmit4">
+    <view class="lineLayout">
+      <text>电子邮箱：</text>
+      <input type="text" bindchange="inputemail4" name="email4" value="{{getEmail4}}"></input>
+    </view>
+    <view class="lineLayout">
+      <text>输入密码：</text>
+      <input type="password" name="password4" value="{{getPwd4}}"></input>
+    </view>
+    <view class="lineLayout">
+      <text>确认密码：</text>
+      <input type="password" name="confirm4" value="{{getPwdConfirm4}}"></input>
+    </view>
+    <button type="primary" form-type="submit">登陆</button>
+    <view>
+      <view class="txt4">{{showMsg401}}</view>
+      <view class="txt4">{{showMsg402}}</view>
+    </view>
+  </form>
+</view>
+
+<view class="box">
+  <view class="title">视频展示</view>
+  <view class="videoLayout">
+    <video id="myVideo" src="https://videocdn.taobao.com/oss/taobao-ugc/b4ef388bae1a4ad6a05d6a5ae56499fd/1483066331/video.mp4" danmu-list="{{danmuList}}" enable-danmu danmu-btn controls></video>
+  </view>
+  <view>
+    <view class="view">弹幕内容</view>
+    <input bindblur="inputVideo" type="text" placeholder="在此处输入弹幕内容"></input>
+    <button type="primary" bindtap="sendDanmu">发送弹幕</button>
+  </view>  
+</view>
+
+<view class="box">
+  <view class="title">音频展示</view>
+  <audio poster="{{posterMusic}}" name="{{nameMusic}}" author="{{authorMusic}}" src="{{srcMusic}}" id="myMusic" controls loop></audio>
+  <view class="btnlayoutMusic">
+    <button bindtap="musicPlay" class="btnMusic">播放</button>
+    <button bindtap="musicPause" class="btnMusic">暂停</button>
+    <button bindtap="music14" class="btnMusic">设置当前播放时间为14秒</button>
+    <button bindtap="musicStart" class="btnMusic">回到开头</button>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">图片展示</view>
+  <view wx:for="{{imgArray}}" wx:key="key">
+    <view>{{item.text}}</view>
+    <view class="imgLayout">
+      <image src="{{img}}" mode="{{item.mode}}" class="image"></image>
+    </view>
+    ---------------------------------
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">个人信息填写</view>
+  <view class="lineLayout">
+    <view>姓名：</view>
+    <input placeholder="请输入姓名" bindinput="pickerName"></input>
+  </view>
+  <picker bindchange="pickerSex" range="{{genderInfo}}">
+    <view>性别：{{sex}}</view>
+  </picker>
+  <picker mode="region" bindchange="pickerRegion">
+    <view>籍贯：{{birthPlace}}</view>
+  </picker>
+  <picker mode="date" start="1800-01-01" end="3999-12-12" bindchange="pickerDate">
+    <view>出生日期：{{birthDay}}</view>
+  </picker>
+  <view class="lineLayout">
+    <view>身高（CM）：</view>
+    <input placeholder="请输入身高" type="number" bindinput="pickerHeight"></input>
+  </view>
+  <view class="lineLayout">
+    <view>体重（KG）：</view>
+    <input placeholder="请输入体重" type="digit" bindinput="pickerWeight"></input>
+  </view>
+  <button bindtap="showMessage">显示个人信息</button>
+  <view hidden="{{flag}}" class="content">
+    <view class="content-item">姓名：{{person.name}}</view>
+    <view class="content-item">性别：{{person.sex}}</view>
+    <view class="content-item">籍贯：{{person.birthPlace}}</view>
+    <view class="content-item">出生年月：{{person.birthDay}}</view>
+    <view class="content-item">身高(CM)：{{person.height}}</view>
+    <view class="content-item">体重(KG)：{{person.weight}}</view>
+  </view>
+</view>
+
+<view class="box">
   <view class="title">Swiper and Switch</view>
   <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}">
     <block wx:for="{{background}}" wx:key="index">
@@ -41,7 +280,7 @@
 
 <view class="box">
   <view class="title">修改字体样式和大小</view>
-  <text style="font-weight:{{myBold}}; font-style:{{myItalic}}; text-decoration:{{myUnderline}}; font-size:{{myFontSize}}">微EAM工业云平台xx</text>
+  <text style="font-weight:{{myBold}}; font-style:{{myItalic}}; text-decoration:{{myUnderline}}; font-size:{{myFontSize}} ">微EAM工业云平台</text>
   <checkbox-group bindchange="checkboxChange">
     <checkbox value="isBold">加粗</checkbox>
     <checkbox value="isItalic">斜线</checkbox>
@@ -296,7 +535,7 @@
     <view class="waikuang">
       <icon type="success" class="myleft"></icon>
       <view class="mycenter">Incluede</view>
-      <image src="/images/right-arrow.png" class="myright"></image>
+      <image src="/images/right-arrow.png" class="myright" class="image"></image>
     </view>
   </navigator>
 </view>
@@ -363,7 +602,7 @@
 <view class="box">
   <view class="title">图片和声音</view>
   <view style="text-align:center">
-    <image src="{{imgSrc}}" bindtap="tapVedio"></image>
+    <image src="{{imgSrc}}" bindtap="tapVedio" class="image"></image>
   </view>
 </view>
 

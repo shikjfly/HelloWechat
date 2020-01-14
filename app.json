@@ -2,6 +2,7 @@
   "pages": [
     "pages/edu/edu",
     "pages/index/index",
+    "pages/detail4/detail4",
     "pages/us/us"
   ],
   "window": {

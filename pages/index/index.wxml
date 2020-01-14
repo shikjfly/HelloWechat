@@ -1,3 +1,5 @@
 <!--index.wxml-->
 
-<text>pages/us/us.wxml</text>
+<text>
+该小程序是制作demo，让学生根据教学demo学习如何制作小程序
+</text>

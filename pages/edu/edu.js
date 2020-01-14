@@ -21,9 +21,41 @@ function eduFunc() {
 };
 var util = require('../../utils/util.js');
 
+function Person(name, sex, birthPlace, birthDay, height, weight) {
+  this.name = name;
+  this.sex = sex;
+  this.birthPlace = birthPlace;
+  this.birthDay = birthDay;
+  this.height = height;
+  this.weight = weight;
+};
+
+function getRandomColor(){
+  let rgb=[];
+  for(let i=0; i<3; ++i){
+    let color = Math.floor(Math.random()*256).toString(16);
+    color = color.length==1?'0'+color:color;
+    rgb.push(color);
+  }
+  return '#'+rgb.join('')
+};
+
+function createRandomIndex(){
+  return Math.floor(Math.random()*10);
+};
+
+var ctxCanvas = wx.createCanvasContext("myCanvas");
+var ctxCanvasSins = wx.createCanvasContext("myCanvasSins");
+var tempFilePaths, tempFilePath;
+
 Page({
   data: {
     imgSrc: '/images/dog.jpg',
+    img: '/images/dogs.png',
+    srcMusic: "https://files.xiami.com/webh5/files/video/30b4a859bbf33d5fc708685d6ddd2a0f.123222.mp4",
+    posterMusic: "https://pic.xiami.net/images/artistlogo/23/14578645251123.jpg?x-oss-process=image/resize,limit_0,m_fill,s_410/quality,q_80/format,jpg",
+    nameMusic:"泡沫",
+    authorMusic:"G.E.M.邓紫棋",
     flag: true,
     name: '',
     chinese_score: '',
@@ -76,12 +108,100 @@ Page({
     transparency:1,
     background: ['bc-red', 'bc-green', 'bc-blue'],
     indicatorDots:true,
-    autoplay: false,
+    autoplay: true,
     circular:false,
     vertical:false,
     interval:2000,
     duration:500,
+    genderInfo:["男", "女"],
+    imgArray: [{
+      mode: 'aspectFit',
+      text: 'aspectFit:保持纵横比缩放图片，使图片完整地显示出来'
+    }, {
+        mode: 'scaleToFill',
+        text: 'scaleToFill:不保持纵横比缩放图片，使图片拉升适应'
+      }, {
+        mode: 'aspectFill',
+        text: 'aspectFill:保持纵横比缩放图片，只保证图片的短边能完整地显示出来'
+      }, {
+        mode: 'top',
+        text: 'top:不缩放图片，只显示图片的顶部区域'
+      }, {
+        mode: 'bottom',
+        text: 'bottom:不缩放图片，只显示图片的底部区域'
+      }, {
+        mode: 'center',
+        text: 'center:不缩放图片，只显示图片的中间区域'
+      }, {
+        mode: 'left',
+        text: 'left:不缩放图片，只显示图片的左边区域'
+      }, {
+        mode: 'right',
+        text: 'right:不缩放图片，只显示图片的右边区域'
+      }, {
+        mode: 'top left',
+        text: 'top left:不缩放图片，只显示图片的左上边区域'
+      }, {
+        mode: 'top right',
+        text: 'top right:不缩放图片，只显示图片的右上边区域'
+      }, {
+        mode: 'bottom left',
+        text: 'bottom left:不缩放图片，只显示图片的左下边区域'
+      }, {
+        mode: 'bottom right',
+        text: 'bottom right:不缩放图片，只显示图片的右下边区域'
+      }   
+    ],
+    danmuList: [{
+      text: '第1秒出现的弹幕',
+      color: '#ff0000',
+      time: 1
+    }, {
+        text: '第3秒出现的弹幕',
+        color: '#ff00ff',
+        time: 3
+      }
+    ],
+    getEmail4: '',
+    getPwd4: '',
+    getPwdConfirm4: '',
+    imgFaceArray: [
+      '/images/01.jpg',
+      '/images/02.jpg',
+      '/images/03.jpg',
+      '/images/04.jpg',
+      '/images/05.jpg',
+      '/images/06.jpg',
+      '/images/07.jpg',
+      '/images/08.jpg',
+      '/images/09.jpg',
+      '/images/10.jpg',
+    ],
+    indexFace:0,
+    pen:5,
+    colorFree:'#000000',
+    latitude: 29.8620000000, 
+    longitude: 121.5363100000,
+    markers:[{
+      id: 0,
+      latitude: 29.8620000000,
+      longitude: 121.5363100000,
+      iconPath:'/images/location.png',
+      label:{
+        content:'我的位置',
+        color:'#0000FF',
+        bgColor:'#FFFF00',
+        fontSize:20
+      }
+    }, {
+        latitude: 29.8620000000,
+        longitude: 121.5363100000,
+        iconPath: '/images/location.png',
+    }],
+    msgFile:'',
   },
+
+  
 
   tapVedio: function () {
     let audio = wx.createInnerAudioContext()
@@ -165,6 +285,11 @@ Page({
     setInterval(() => {
       that.createColor();
     }, 5000);
+    this.audioCtx = wx.createAudioContext("myMusic");
+    this.videoCtx = wx.createVideoContext("myVideo");
+    this.ctxCanvasParm = wx.createCanvasContext("myCanvasParm", this);
+    this.ctxCanvasFree = wx.createCanvasContext("myCanvasFree", this);
+    this.drawSinX();
   },
   newRand: function () {
     createRand();
@@ -351,6 +476,512 @@ Page({
       vertical: !this.data.vertical
     })
   },
+  pickerName: function (e) {
+    this.name = e.detail.value
+  },
+  pickerHeight: function (e) {
+    this.height = e.detail.value
+  },
+  pickerWeight: function (e) {
+    this.weight = e.detail.value
+  },
+  pickerDate: function (e) {
+    this.birthDay = e.detail.value
+    this.setData({
+      birthDay: this.birthDay
+    })
+  },
+  pickerSex: function (e) {
+    this.sex = this.data.genderInfo[e.detail.value]
+    this.setData({
+      sex: this.sex
+    })
+  },
+  pickerRegion: function (e) {
+    this.birthPlace = e.detail.value
+    this.setData({
+      birthPlace: this.birthPlace
+    })
+  },
+  showMessage:function(e){
+    var p = new Person(this.name, this.sex, this.birthPlace,this.birthDay, this.height, this.weight);
+    this.setData({
+      flag: false,
+      person:p
+    })
+  },
+  musicPlay: function () {
+    this.audioCtx.play()
+  },
+  musicPause: function () {
+    this.audioCtx.pause()
+  },
+  music14: function () {
+    this.audioCtx.seek(14)
+  },
+  musicStart: function () {
+    this.audioCtx.seek(0)
+  },
+  inputVideo:function(e){
+    this.inputValue = e.detail.value
+  },
+  sendDanmu:function(){
+    this.videoCtx.sendDanmu({
+      text:this.inputValue,
+      color:getRandomColor(),
+    })
+  },
+  formSubmit4:function(e){
+    if (e.detail.value.email4.length == 0 || e.detail.value.password4.length == 0){
+      this.setData({
+        showMsg401:'邮箱或密码不得为空！',
+      })
+    } else if (e.detail.value.password4 != e.detail.value.confirm4){
+      this.setData({
+        showMsg402: '两次输入密码不一致！',
+        getPwd4:'',
+        getPwdConfirm4:'',
+      })
+    }else{
+      wx.navigateTo({
+        url: '../detail4/detail4',
+      })
+    }
+  },
+  inputemail4:function(e){
+    var email4 = e.detail.value;
+    var checkedNum4 = this.checkemail4(email4)
+  },
+  checkemail4: function (email4){
+    let str = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
+    if(str.test(email4)){
+      return true
+    }else{
+      wx.showToast({
+        title: '邮箱格式错误',
+        icon:'loading',
+      })
+      this.setData({
+        getEmail4:''
+      })
+      return false
+    }
+  },
+  changeFace:function(){
+    this.setData({
+      indexFace: createRandomIndex()
+    })
+  },
+  onShow:function(){
+    var that = this;
+    that.isShow = true;
+    wx.onAccelerometerChange(function(res){
+      if(!that.isShow){
+        return
+      }
+      if(res.x>0.5 || res.y>0.5 || res.z>0.5){
+        wx.showToast({
+          title: '摇一摇成功',
+          icon:'success',
+          duration:2000
+        })
+        that.changeFace();
+        var result = 1;
+        for(var i=1; i<that.inputValue; i++){
+          result = result*i
+        }
+        that.setData({
+          facResult:result
+        })
+      }
+    })
+  },
+  getFacInput:function(e){
+    this.inputValue = e.detail.value
+  },
+  onHide:function(){
+    this.isShow = false;
+  },
+  clearCanvas: function () {
+    ctxCanvas.draw()
+  },
+  drawDotCanvas: function () {
+    ctxCanvas.arc(200,200,10,0,2*Math.PI);
+    ctxCanvas.setFillStyle("black");
+    ctxCanvas.fill();
+    ctxCanvas.draw();
+  },
+  drawCircleCanvas: function () {
+    ctxCanvas.setFillStyle("black");
+    ctxCanvas.arc(200, 200, 10, 0, 2 * Math.PI);
+    ctxCanvas.fill();
+    ctxCanvas.setStrokeStyle("red");
+    ctxCanvas.moveTo(300, 200);
+    ctxCanvas.arc(200, 200, 100, 0, 2 * Math.PI);
+    ctxCanvas.stroke();
+    ctxCanvas.draw();
+  },
+  drawDashCanvas: function () {
+    ctxCanvas.setStrokeStyle("red");
+    ctxCanvas.setLineDash([20,10]);
+    ctxCanvas.setLineWidth(10);
+    ctxCanvas.moveTo(50, 100);
+    ctxCanvas.lineTo(250, 100);
+    ctxCanvas.lineTo(150, 300);
+    ctxCanvas.lineTo(50, 100);
+    ctxCanvas.stroke();
+    ctxCanvas.draw();
+    ctxCanvas.setLineDash([0, 0]);
+    ctxCanvas.setLineWidth(1);
+  },
+  capAndJoinCanvas: function () {
+    ctxCanvas.setStrokeStyle("red");
+    ctxCanvas.setLineWidth(20);
+    ctxCanvas.setLineCap("round");
+    ctxCanvas.setLineJoin("miter");
+    ctxCanvas.moveTo(50, 50);
+    ctxCanvas.lineTo(250, 50);
+    ctxCanvas.lineTo(50, 250);
+    ctxCanvas.lineTo(250, 250);
+    ctxCanvas.stroke();
+    ctxCanvas.draw();
+    ctxCanvas.setLineWidth(1);
+    ctxCanvas.setLineCap("butt");
+    ctxCanvas.setLineJoin("miter");
+  },
+  drawTextCanvas: function () {
+    ctxCanvas.setFillStyle("red");
+    ctxCanvas.setFontSize(40);
+    ctxCanvas.setTextBaseline("bottom");
+    ctxCanvas.fillText("微EAM", 80, 80);
+    ctxCanvas.setFillStyle("yellow");
+    ctxCanvas.setTextBaseline("top");
+    ctxCanvas.fillText("微EAM", 80, 80);
+    ctxCanvas.setFillStyle("black");
+    ctxCanvas.rotate(30*Math.PI/180);
+    ctxCanvas.fillText("微EAM", 150, 80);
+    ctxCanvas.draw();
+  },
+  circularCanvas: function () {
+    var grd = ctxCanvas.createCircularGradient(175, 175, 125);
+    grd.addColorStop(0, "purple");
+    grd.addColorStop(1, "white");
+    ctxCanvas.setFillStyle(grd);
+    ctxCanvas.fillRect(50, 50, 250, 250);
+    ctxCanvas.draw();
+  },
+  shadowRectCanvas: function () {
+    ctxCanvas.setFillStyle("orange");
+    ctxCanvas.setShadow(20, 20, 50, "yellow");
+    ctxCanvas.fillRect(50, 50, 250, 250);
+    ctxCanvas.draw();
+  },
+  translucentCanvas: function () {
+    ctxCanvas.setFillStyle("red");
+    ctxCanvas.setGlobalAlpha(0.2);
+    ctxCanvas.fillRect(50, 50, 250, 250);
+    ctxCanvas.draw();
+    ctxCanvas.setGlobalAlpha(1);
+  },
+  drawCircleParm: function (e) {
+    var x = e.detail.value.xParm;
+    var y = e.detail.value.yParm;
+    var r = e.detail.value.radiusParm;
+    this.ctxCanvasParm.arc(x,y,r,0,2*Math.PI);
+    this.ctxCanvasParm.stroke();
+    this.ctxCanvasParm.draw(true);
+  },
+  clearParm:function(){
+    this.ctxCanvasParm.draw();
+  },
+  onReady: function () {
+    this.ctxCanvasTrans = wx.createCanvasContext("myCanvasTrans", this);
+    this.animation = wx.createAnimation();
+  },
+  drawRectTrans: function () {
+    var ctx = this.ctxCanvasTrans;
+    ctx.rect(1,1,50,50);
+    ctx.stroke();
+    ctx.draw(true);
+  },
+  scaleTrans: function () {
+    this.ctxCanvasTrans.scale(2, 2);
+    this.ctxCanvasTrans.drawRect(true);
+  },
+  translateTrans: function () {
+    this.ctxCanvasTrans.translate(20, 20);
+    this.drawRect();
+  },
+  rotateTrans: function () {
+    this.ctxCanvasTrans.rotate(30*Math.PI/180);
+    this.drawRect();
+  },
+  drawDot:function(x,y){
+    ctxCanvasSins.arc(x,y,5,0,2*Math.PI);
+    ctxCanvasSins.setFillStyle("black");
+    ctxCanvasSins.fill();
+    ctxCanvasSins.draw(true);
+  },
+  drawSinX:function(){
+    for(var x=0; x<2*Math.PI; x+=Math.PI/180){
+      var y = Math.sin(x);
+      this.drawDot(10+50*x, 60+50*y);
+    }
+  },
+  isClear: false,
+  touchStart: function (e) {
+    this.x1 = e.changedTouches[0].x;
+    this.y1 = e.changedTouches[0].y;
+    if(this.isClear){
+      this.ctxCanvasFree.setStrokeStyle("#FFFFFF");
+      this.ctxCanvasFree.setLineCap("round");
+      this.ctxCanvasFree.setLineJoin("round");
+      this.ctxCanvasFree.setLineWidth(20);
+      this.ctxCanvasFree.beginPath();
+    }else{
+      this.ctxCanvasFree.setStrokeStyle(this.data.color);
+      this.ctxCanvasFree.setLineWidth(this.data.pen);
+      this.ctxCanvasFree.setLineCap("round");
+      this.ctxCanvasFree.beginPath();
+    }
+  },
+  touchMove: function (e) {
+    var x2 = e.changedTouches[0].x;
+    var y2 = e.changedTouches[0].y;
+    if (this.isClear) {
+      this.ctxCanvasFree.save();
+      this.ctxCanvasFree.moveTo(this.x1, this.y1);
+      this.ctxCanvasFree.lineTo(x2, y2);
+      this.ctxCanvasFree.stroke();
+      this.x1 = x2;
+      this.y1 = y2;
+    } else {
+      this.ctxCanvasFree.moveTo(this.x1, this.y1);
+      this.ctxCanvasFree.lineTo(x2, y2);
+      this.ctxCanvasFree.stroke();
+      this.x1 = x2;
+      this.y1 = y2;
+    }
+    this.ctxCanvasFree.draw(true);
+  },
+  touchEnd: function () { },
+  penSelect: function (e) {
+    this.setData({
+      pen: parseInt(e.currentTarget.dataset.param)
+    })
+    this.isClear = false;
+  },
+  colorSelect: function (e) {
+    console.log(e.currentTarget);
+    this.setData({
+      color: e.currentTarget.dataset.param
+    })
+    this.isClear = false;
+  },
+  clearFree: function () {
+    this.isClear = true;
+  },
+  clearAllFree: function () {
+    this.setData({
+      pen:5,
+      color:"#000000"
+    })
+    this.ctxCanvasFree.draw();
+  },
+  rotateAnimation: function () {
+    this.animation.rotate(Math.random() * 720 - 360).step()
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  scaleAnimation: function () {
+    this.animation.scale(Math.random() * 2).step()
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  translateAnimation: function () {
+    this.animation.translate(Math.random()*100-50, Math.random()*100-50).step()
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  skewAnimation: function () {
+    this.animation.skew(Math.random()*90 , Math.random()*90).step()
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  rotateAndScaleAnimation: function () {
+    this.animation.rotate(Math.random() * 720 - 360).scale(Math.random() * 2).step()
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  rotateThenScaleAnimation: function () {
+    this.animation.rotate(Math.random() * 720 - 360).step().scale(Math.random() * 2).step()
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  allAnimation: function () {
+    this.animation.rotate(Math.random() * 720 - 360)
+      .scale(Math.random() * 2)
+      .translate(Math.random() * 100 - 50, Math.random() * 100 - 50)
+      .skew(Math.random() * 90, Math.random() * 90)
+      .step()
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  allInQueueAnimation: function () {
+    this.animation.rotate(Math.random() * 720 - 360).step()
+      .scale(Math.random() * 2).step()
+      .translate(Math.random() * 100 - 50, Math.random() * 100 - 50).step()
+      .skew(Math.random() * 90, Math.random() * 90).step()
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  resetAnimation: function () {
+    this.animation.rotate(0,0)
+      .scale(1)
+      .translate(0,0)
+      .skew(0,0)
+      .step({
+        duration:0
+      })
+    this.setData({
+      animation: this.animation.export()
+    })
+  },
+  chooseImage:function(){
+    var that = this;
+    wx.chooseImage({
+      count:1,
+      sizeType:['original', 'compressed'],
+      sourceType:['album', 'camera'],
+      success: function(res) {
+        that.setData({
+          imgPath:res.tempFilePaths
+        })
+      },
+    })
+  },
+  chooseVideo:function(){
+    var that=this;
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration:60,
+      camera:['front','back'],
+      success:function(res){
+        wx.showToast({
+          title: 'res.tempFillPath',
+          icon:'success',
+          duration:2000
+        })
+        that.setData({
+          videoPath:res.tempFilePath
+        })
+      }
+    })
+  },
+  chooseLocation:function(){
+    wx.chooseLocation({
+      success: function(res) {
+
+      },
+    })
+  },
+  openLocation:function(){
+    wx.getLocation({
+      type:'gcj02',
+      success: function (res) {
+        wx.openLocation({
+          latitude: res.latitude,
+          longitude: res.longitude,
+          scale: 28,
+        })
+      },
+    })
+  },
+  openFile: function () {
+    var that = this;
+    wx.chooseImage({
+      success: function(res) {
+        tempFilePaths = res.tempFilePaths;
+        console.log('打开文件路径：'+ tempFilePaths)
+        that.setData({
+          imgFilePath:tempFilePaths[0],
+          hidden:false,
+          msgFile:'文件打开成功！'
+        })
+      },
+    })
+  },
+  saveFile: function () {
+    var that = this;
+    wx.saveFile({
+      tempFilePath: tempFilePaths[0],
+      success(res){
+        console.log('保存文件路径：'+ res.savedFilePath);
+        that.setData({
+          hidden: false,
+          msgFile: '文件保存成功！'
+        })
+      }
+    })
+  },
+  getSavedFileInfo: function () {
+    var i,file;
+    var that = this;
+    wx.getSavedFileList({
+      success:function(res){
+        if (res.fileList.length == 0) {
+          that.setData({
+            hidden: false,
+            msgFile: '没有文件信息'
+          })
+        }else{
+          for(i=0; i<res.fileList.length; i++){
+            file = res.fileList[i];
+            console.log('第'+i+'个文件路径：'+file.filePath)
+            wx.getSavedFileInfo({
+              filePath: file.filePath,
+              success: function (res) {
+                console.log('第' + i + '个文件大小为：' + res.size)
+                that.setData({
+                  hidden: false,
+                  msgFile: '文件数量：'+i+'\n最后一个文件的大小：'+res.size+'\n最后一个文件的创建时间：'+res.createTime
+                })                
+              }
+            })
+          }
+        }
+      }
+    })
+  },
+  removedSavedFile: function () {
+    var i, file;
+    var that = this;
+    wx.getSavedFileList({
+      success: function (res) {
+        for (i = 0; i < res.fileList.length; i++) {
+          file = res.fileList[i];
+          wx.removeSavedFile({
+            filePath: file.filePath,
+          })
+          console.log('第' + (i+1) + '个文件被删除')
+          that.setData({
+            hidden: false,
+            msgFile: '文件全部删除'
+          })     
+        }
+      }
+    })  
+  },
+
+
 
 
 })
