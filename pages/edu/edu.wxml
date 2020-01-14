@@ -1,5 +1,9 @@
 <!--edu.wxml-->
 <view class="box">
+  <view class="title">缓存操作</view>
+</view>
+
+<view class="box">
   <view class="title">文件操作</view>
   <image src="{{imgFilePath}}"></image>
   <view class="btnLayout">
