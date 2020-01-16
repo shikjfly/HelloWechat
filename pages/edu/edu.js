@@ -199,9 +199,9 @@ Page({
         iconPath: '/images/location.png',
     }],
     msgFile:'',
+    msgStorage: '--->小程序什么时候使用setStorage 什么时候使用setStorageSync?\n--->前者为异步操作，后者为同步操作，若后续的操作依赖于更改storage后的数据，则需要同步，否则后续操作执行时还是使用的未更新的数据。若后续操作无需用到更改的storage数据，则不需要立即同步，这时用异步操作即可，节省内存。',
+    statusWifi:'获取中...',
   },
-
-  
 
   tapVedio: function () {
     let audio = wx.createInnerAudioContext()
@@ -290,7 +290,27 @@ Page({
     this.ctxCanvasParm = wx.createCanvasContext("myCanvasParm", this);
     this.ctxCanvasFree = wx.createCanvasContext("myCanvasFree", this);
     this.drawSinX();
+    wx.getNetworkType({
+      success: function(res) {
+        that.setData({
+          statusWifi:res.networkType
+        })
+      },
+    });
+    wx.onNetworkStatusChange(function(res){
+      if (res.isConnected) {
+        that.setData({
+          statusWifi: res.networkType
+        })        
+      } else {
+        that.setData({
+          statusWifi: '未联网！'
+        })
+      }
+    })
   },
+
+  // end onLoad function函数
   newRand: function () {
     createRand();
     this.setData({
@@ -579,7 +599,7 @@ Page({
       if(!that.isShow){
         return
       }
-      if(res.x>0.5 || res.y>0.5 || res.z>0.5){
+      if(res.x>1.5 || res.y>1.5 || res.z>1.5){
         wx.showToast({
           title: '摇一摇成功',
           icon:'success',
@@ -980,6 +1000,251 @@ Page({
       }
     })  
   },
+  Student: function (id, name, chinese, math, english) {
+    this.id = id;
+    this.name = name;
+    this.chinese = chinese;
+    this.math = math;
+    this.english = english;
+  },
+  loadStudent:function(){
+    var students = new Array();
+    var stu1 = new this.Student('1', 'TOM', 95, 87, 72);
+    var stu2 = new this.Student('2', 'Kevin', 75, 97, 79);
+    students.push(stu1);
+    students.push(stu2);
+    return students;
+  },
+  setStorage: function () {
+    var that = this;
+    wx.setStorage({
+      key: '高一',
+      data: this.loadStudent(),
+      success: function () {
+        that.setData({
+          hidden: false,
+          msgStorage: '异步存储数据成功！'
+        })
+      }
+    })
+  },
+  getStorage: function () {
+    var that = this;
+    wx.getStorage({
+      key: '高一',
+      success: function (res) {
+        var length = res.data.length;
+        if (length > 1) {
+          that.setData({
+            hidden: false,
+            msgStorage: '异步获取缓存数据成功，学生1信息：' +
+              '\n学号：' + res.data[length - 2].id +
+              '\n姓名：' + res.data[length - 2].name +
+              '\n语文成绩：' + res.data[length - 2].chinese +
+              '\n数学成绩：' + res.data[length - 2].math +
+              '\n英语成绩：' + res.data[length - 2].english
+          })
+          console.log(res.data)
+        }
+      },
+      fail: function () {
+        that.setData({
+          hidden: false,
+          msgStorage: '异步获取缓存数据 失败！！！'
+        })
+      }
+    })
+  },
+  getStorageInfo: function () {
+    var that = this;
+    wx.getStorageInfo({
+      success: function (res) {
+        that.setData({
+          hidden: false,
+          msgStorage: '异步获取缓存信息成功！' +
+            '\n已使用空间：' + res.currentSize +
+            '\n最大空间为：' + res.limitSize
+        })
+        console.log(res);
+      },
+      fail: function () {
+        that.setData({
+          hidden: false,
+          msgStorage: '异步获取缓存信息 失败！！！'
+        })
+      }
+    })
+  },
+  removeStorage: function () {
+    var that = this;
+    wx.removeStorage({
+      key: '高一',
+      success: function (res) {
+        that.setData({
+          hidden: false,
+          msgStorage: '异步删除缓存数据成功！'
+        })
+        console.log(res.data);
+      },
+      fail: function () {
+        that.setData({
+          hidden: false,
+          msgStorage: '异步删除缓存数据 失败！！！'
+        })
+      }
+    })
+  },
+
+
+  setStorageSync: function () {
+    var that = this;
+    wx.setStorageSync('高二', this.loadStudent());
+    that.setData({
+      hidden: false,
+      msgStorage: '同步存储数据成功！'
+    })
+  },
+  getStorageSync: function () {
+    var that = this;
+    try{
+      var value = wx.getStorageSync("高二");
+      var length = value.length;
+      if (length > 1) {
+        that.setData({
+          hidden: false,
+          msgStorage: '同步获取缓存数据成功，学生2信息：' +
+            '\n学号：' + value[length - 1].id +
+            '\n姓名：' + value[length - 1].name +
+            '\n语文成绩：' + value[length - 1].chinese +
+            '\n数学成绩：' + value[length - 1].math +
+            '\n英语成绩：' + value[length - 1].english
+        })
+        console.log(value)
+      }
+    }catch(e){
+      that.setData({
+        hidden: false,
+        msgStorage: '同步获取缓存数据 失败！！！'
+      })
+      console.log(e);
+    }
+  },
+  getStorageInfoSync: function () {
+    var that = this;
+    try {
+      var res = wx.getStorageInfoSync("高二");
+      that.setData({
+        hidden: false,
+        msgStorage: '同步获取缓存信息成功！' +
+          '\n已使用空间：' + res.currentSize +
+          '\n最大空间为：' + res.limitSize
+      })
+      console.log(res)      
+    } catch (e) {
+      that.setData({
+        hidden: false,
+        msgStorage: '同步获取缓存信息 失败！！！'
+      })
+      console.log(e);
+    }
+  },
+  removeStorageSync: function () {
+    var that = this;
+    try{
+      wx.removeStorageSync("高二");
+      that.setData({
+        hidden: false,
+        msgStorage: '同步删除缓存数据成功！'
+      })
+    } catch (e) {
+      that.setData({
+        hidden: false,
+        msgStorage: '同步删除缓存数据 失败！！！'
+      })
+      console.log(e);
+    }
+  },
+  wifiStatus:function(){
+    var that = this;
+    wx.getConnectedWifi({
+      success:function(res){
+        that.setData({
+          res:res.wifi
+        })
+        console.log(res.wifi);
+      },
+      fail:function(res){
+        console.log(res,'WiFi获取失败...');
+        wx.showToast({
+          title: res+'WiFi获取失败...',
+          icon: 'none',
+          duration: 2000,
+        });
+      }
+
+    })  
+  },
+  startCompass: function () {
+    var that = this;
+    wx.startCompass({
+      success: function () {
+        wx.onCompassChange(function (res) {
+          that.setData({
+            resCompass: res
+          })
+          console.log(res + '罗盘已经启动！')
+        })
+      }
+    })
+  },
+  stopCompass: function () {
+    wx.stopCompass({
+      success: function (res) {
+        console.log(res + '罗盘已经停止！')
+      }
+    })
+  },
+  startAcc: function () {
+    var that = this;
+    wx.startAccelerometer({
+      success: function () {
+        wx.onAccelerometerChange(function (res) {
+          that.setData({
+            resAcc: res
+          })
+          console.log(res + '启动加速度传感器监听')
+        })
+      }
+    })
+  },
+  stopAcc: function () {
+    wx.stopAccelerometer({
+      success: function (res) {
+        console.log(res + '已经停止加速度传感器监听！')
+      }
+    })
+  },
+  startGyroscope: function () {
+    var that = this;
+    wx.startGyroscope({
+      success: function () {
+        wx.onGyroscopeChange(function (res) {
+          that.setData({
+            resGyroscope: res
+          })
+          console.log(res + '启动陀螺仪传感器监听')
+        })
+      }
+    })
+  },
+  stopGyroscope: function () {
+    wx.stopGyroscope({
+      success: function (res) {
+        console.log(res + '已经停止陀螺仪传感器监听！')
+      }
+    })
+  },
+
 
 
 

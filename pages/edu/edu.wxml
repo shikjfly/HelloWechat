@@ -1,6 +1,68 @@
 <!--edu.wxml-->
 <view class="box">
+  <view class="title">传感器</view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="startCompass">启动罗盘监听</button>
+    <button type="primary"  bindtap="stopCompass">停止罗盘监听</button>
+  </view>
+  <view class="txtLayout">
+    <view>罗盘方位角：{{resCompass.direction}}</view>
+    <view>罗盘精度：{{resCompass.accuracy}}</view>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="startAcc">启动加速度计</button>
+    <button type="primary"  bindtap="stopAcc">停止加速度计</button>
+  </view>
+  <view class="txtLayout">
+    <view>X轴方向加速度：{{resAcc.x}}</view>
+    <view>Y轴方向加速度：{{resAcc.y}}</view>
+    <view>Z轴方向加速度：{{resAcc.z}}</view>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="startGyroscope">启动陀螺仪</button>
+    <button type="primary"  bindtap="stopGyroscope">停止陀螺仪</button>
+  </view>
+  <view class="txtLayout">
+    <view>X轴方向角速度：{{resGyroscope.x}}</view>
+    <view>Y轴方向角速度：{{resGyroscope.x}}</view>
+    <view>Z轴方向角速度：{{resGyroscope.x}}</view>
+  </view>
+
+</view>
+
+<view class="box">
+  <view class="title">网络状态</view>
+  <view>当前网络状态是：{{statusWifi}}</view>
+  <button type="primary" bindtap="wifiStatus">Wi-Fi状态</button>
+  <view>
+    <view>SSID:{{res.SSID}}</view>
+    <view>BSSID:{{res.BSSID}}</view>
+    <view>安全性:{{res.secure}}</view>
+    <view>信号强度:{{res.signalStrength}}</view>
+  </view>
+</view>
+
+<view class="box">
   <view class="title">缓存操作</view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="setStorage">异步存储数据</button>
+    <button type="default"  bindtap="setStorageSync">同步存储数据</button>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="getStorage">异步获取数据</button>
+    <button type="default"  bindtap="getStorageSync">同步获取数据</button>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="getStorageInfo">异步缓存信息</button>
+    <button type="default"  bindtap="getStorageInfoSync">同步缓存信息</button>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="removeStorage">异步删除数据</button>
+    <button type="default"  bindtap="removeStorageSync">同步删除数据</button>
+  </view>
+  <view class="storageInfo" hidden="{{hidden}}">
+    <text>{{msgStorage}}</text>
+  </view>
 </view>
 
 <view class="box">
