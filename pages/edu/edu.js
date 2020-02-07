@@ -47,6 +47,7 @@ function createRandomIndex(){
 var ctxCanvas = wx.createCanvasContext("myCanvas");
 var ctxCanvasSins = wx.createCanvasContext("myCanvasSins");
 var tempFilePaths, tempFilePath;
+var myItemList = ['第一项', '第二项', '第三项', '第四项'];
 
 Page({
   data: {
@@ -201,6 +202,27 @@ Page({
     msgFile:'',
     msgStorage: '--->小程序什么时候使用setStorage 什么时候使用setStorageSync?\n--->前者为异步操作，后者为同步操作，若后续的操作依赖于更改storage后的数据，则需要同步，否则后续操作执行时还是使用的未更新的数据。若后续操作无需用到更改的storage数据，则不需要立即同步，这时用异步操作即可，节省内存。',
     statusWifi:'获取中...',
+    phoneName:'',
+    phoneNumber:'',
+    brightness:'待查询',
+    copyBrightness:'',
+    hide1:false,
+    hide2:true,
+    setTitle:'',
+    userInfo:{},
+    hasUserInfo:false,
+    canIUse:wx.canIUse('button.open-type.getUserInfo'),
+    openID:'',
+    detail:'点击头像显示您的详细信息',
+    fileID:'',
+    cloudPath:'',
+    imagePath:'',
+    downloadedFilePath:'',
+    uploadSuccess:false,
+    downloadSuccess:false,
+
+
+
   },
 
   tapVedio: function () {
@@ -307,7 +329,22 @@ Page({
           statusWifi: '未联网！'
         })
       }
+    });
+    wx.getSetting({
+      success:res=>{
+        if(res.authSetting['scope.userInfo']){
+          wx.getUserInfo({
+            success:res=>{
+              that.setData({
+                userInfo:res.userInfo,
+                hasUserInfo:true,
+              })
+            }
+          })
+        }
+      }
     })
+    this.getOpenID();
   },
 
   // end onLoad function函数
@@ -1244,9 +1281,394 @@ Page({
       }
     })
   },
-
-
-
+  scanCode:function(){
+    var that = this;
+    wx.scanCode({
+      onlyFromCamera:false,
+      scanType:[],
+      success:function(res){
+        that.setData({
+          resCode:res
+        })
+      }
+    })
+  },
+  inputPhoneName: function (e) {
+    this.phoneName = e.detail.value;
+  },
+  inputPhoneNumber: function (e) {
+    this.phoneNumber = e.detail.value;
+  },
+  makePhoneCall:function(){
+    let phone = this.phoneNumber;
+    wx.makePhoneCall({
+      phoneNumber: phone,
+    })
+  },
+  addPhonePerson:function(){
+    let name = this.phoneName;
+    let phone = this.phoneNumber;
+    if(name=='' || phone==''){
+      wx.showToast({
+        title: '姓名和电话不能为空',
+        icon:'none',
+        duration:2000,
+      })
+    }else{
+      wx.addPhoneContact({
+        firstName: name,
+        mobilePhoneNumber:phone
+      })
+    }
+  },
+  setScreenBrightness:function(e){
+    wx.setScreenBrightness({
+      value: e.detail.value,
+    })
+  },
+  getScreenBrightness:function(){
+    var that = this;
+    wx.getScreenBrightness({
+      success:function(res){
+        that.setData({
+          brightness:res.value.toFixed(1),
+        })
+      },
+    })
+  },
+  setKeepScreenOn:function(e){
+    let isKeeping = e.detail.value;
+    if(isKeeping){
+      wx.setKeepScreenOn({
+        keepScreenOn: true,
+      })
+      wx.vibrateLong()
+    }
+  },
+  copyScreenBrightness:function(){
+    var that = this;
+    let brightness = this.data.brightness;
+    wx.setClipboardData({
+      data: brightness,
+      success:function(res){
+        wx.showToast({
+          title: '复制成功',
+        })
+      }
+    })
+    wx.getClipboardData({
+      success:function(res){
+        that.setData({
+          copyBrightness:res.data
+        })
+      }
+    })
+  },
+  getSystemInfo:function(){
+    var that = this;
+    wx.getSystemInfo({
+      success: (res)=> {
+        that.setData({
+          msgEqu:"异步",
+          hide1:false,
+          hide2:true,
+          modelEqu:res.model,
+          pixelRatioEqu:res.pixelRatio,
+          screenWidthEqu:res.screenWidth,
+          screenHeightEqu:res.screenHeight,
+          windowWidthEqu:res.windowWidth,
+          windowHeightEqu:res.windowHeight,
+          languageEqu:res.language,
+          versionEqu:res.version,
+          systemEqu:res.system,
+          platformEqu:res.platform,
+          SDKVersionEqu:res.SDKVersion,
+        })
+      },
+    })
+  },
+  getSystemInfoSync:function(){
+    var that = this;
+    try{
+      var res = wx.getSystemInfoSync();
+      that.setData({
+        msgEqu: "同步",
+        hide1: false,
+        hide2: true,
+        modelEqu: res.model,
+        pixelRatioEqu: res.pixelRatio,
+        screenWidthEqu: res.screenWidth,
+        screenHeightEqu: res.screenHeight,
+        windowWidthEqu: res.windowWidth,
+        windowHeightEqu: res.windowHeight,
+        languageEqu: res.language,
+        versionEqu: res.version,
+        systemEqu: res.system,
+        platformEqu: res.platform,
+        SDKVersionEqu: res.SDKVersion,
+      })
+    }catch(e){
+      console.log(e);
+    }
+  },
+  inputTitle:function(e){
+    this.setData({
+      setTitle:e.detail.value
+    })
+  },
+  setNavigationBarTitle:function(){
+    let setTitle = this.data.setTitle;
+    wx.setNavigationBarTitle({
+      title: setTitle,
+    })
+  },
+  setNavigationBarColor:function(){
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#ff0000',
+      animation:{
+        duration:4000,
+        timingFunc:'easeInOut',
+      }
+    })
+  },
+  showNavigationBarLoading: function () {
+    wx.showNavigationBarLoading();
+  },
+  hideNavigationBarLoading: function () {
+    wx.hideNavigationBarLoading();
+  },
+  showTabBar: function () {
+    wx.showTabBar({
+      animation: true,
+    })
+  },
+  hideTabBar: function () {
+    wx.hideTabBar({
+      animation: true,
+    })
+  },
+  setTabBarBadge: function () {
+    wx.setTabBarBadge({
+      index: 1,
+      text: '10',
+    })
+  },
+  removeTabBarBadge: function () {
+    wx.removeTabBarBadge({
+      index: 1,
+    })
+  },
+  showTabBarRedDot: function () {
+    wx.showTabBarRedDot({
+      index: 0,
+    })
+  },
+  hideTabBarRedDot: function () {
+    wx.hideTabBarRedDot({
+      index: 0,
+    })
+  },
+  setTabBarStyle:function(){
+    wx.setTabBarStyle({
+      color:'#ff0000',
+      selectedColor:'#0000ff',
+      backgroundColor:'#ffff00',
+      borderStyle:'',
+    })
+  },
+  setTabBarItem:function(){
+    wx.setTabBarItem({
+      index: 2,
+      text:'云开发',
+      iconPath:'/images/home-off.png',
+      selectedIconPath:'/images/home-on.png',
+    })
+  },
+  resetTabBar:function(){
+    wx.setTabBarStyle({
+      color:'#000000',
+      selectedColor:'#00ff00',
+      backgroundColor:'#fff',
+      borderStyle:'',
+    })
+    wx.setTabBarItem({
+      index: 2,
+      text: '关于我们',
+      iconPath: '/images/us-off.png',
+      selectedIconPath: '/images/us-on.png',
+    })
+  },
+  showActionSheet:function(){
+    var that = this;
+    wx.showActionSheet({
+      itemList: myItemList,
+      itemColor:'#0000FF',
+      success:function(res){
+        console.log(myItemList);
+        that.setData({
+          tapIndex:res.tapIndex,
+          tapItem:myItemList[res.tapIndex]
+        })
+      },
+      fail:function(res){
+        that.setData({
+          tapIndex:-1,
+          tapItem:'取消'
+        })
+      },
+      complete:function(res){},
+    })
+  },
+  onGetUserInfo: e => {
+    console.log(e);
+    if(e.detail.userInfo){
+      this.setData({
+        userInfo:e.detail.userInfo,
+        hasUserInfo:true
+      })
+    } else {
+      wx.showModal({
+        title: e.detail.errMsg,
+        content: '小程序需要用户授权获取公开信息才可以继续',
+      })
+    }
+  },
+  
+  getOpenID:function(){
+    var that = this;
+    wx.showLoading({
+      title: '获取openID...',
+    })
+    wx.cloud.callFunction({
+      name:'login',
+      data:{},
+      complete:res=>{
+        wx.hideLoading()
+      },
+      success:res=>{
+        console.log('[云函数][login] user openid:', res.result.openid);
+        that.setData({
+          openID: '[云函数]获取openID成功： ' + res.result.openid,
+          appID: '\n[云函数]获取appID成功： ' + res.result.appid,
+          unionID: '\n[云函数]获取unionID成功： ' + res.result.unionid,
+        })
+      },
+      fail: err => {
+        console.log('[云函数][login] 调用失败', err);
+        that.setData({
+          openID: '[云函数]获取openID失败 ' + err,
+        })
+      }
+    })
+  },
+  getDetail:function(){
+    var userInf = this.data.userInfo;
+    console.log(this.data);
+    var gender = (userInf.gender == 1) ? " 男 " : (userInf.gender == 2) ? " 女 " : "未知";
+    var detailStr = "性别：" + gender;
+    detailStr = detailStr + "\n国家：" + userInf.country;
+    detailStr = detailStr + "\n省份：" + userInf.province;
+    detailStr = detailStr + "\n城市：" + userInf.city;
+    this.setData({
+      detail:detailStr
+    })
+  },
+  doUpload:function(){
+    var that = this;
+    const fileID = this.data.fileID;
+    if(fileID !=''){
+      wx.cloud.deleteFile({
+        fileList:[fileID]
+      })
+    }
+    console.log(this.data);
+    wx.chooseImage({
+      count:22,
+      sizeType:['compressed'],
+      sourceType:['album', 'camera'],
+      success: function(res) {
+        wx.showLoading({
+          title: '上传中',
+        })
+        const filePath = res.tempFilePaths[0];
+        console.log('filePath:',filePath);
+        const cloudPath = 'img' + Date.now() + filePath.match(/\.[^.]+?$/)[0];
+        wx.cloud.uploadFile({
+          cloudPath,
+          filePath,
+          success: res => {
+            console.log('[上传文件]成功：', res);
+            that.setData({
+              uploadSuccess: true,
+              downloadSuccess: false,
+              fileID: res.fileID,
+              cloudPath: cloudPath,
+              imagePath: filePath,
+              downloadedFilePath: '',
+            })
+          },
+          fail: e => {
+            console.log('[上传文件]失败：', e);
+            that.setData({
+              uploadSuccess: false,
+              fileID: '',
+              cloudPath: '',
+              imagePath: '',
+            })
+            wx.showToast({
+              title: '上传失败',
+              icon:'none',
+            })
+          },
+          complete:()=>{
+            wx.hideLoading()
+          }
+        })
+      },
+      fail:e=>{
+        console.error(e);
+      }
+    })
+  },
+  doDownload:function(){
+    var that = this;
+    wx.showLoading({
+      title: '下载中...',
+    })
+    wx.cloud.downloadFile({
+      fileID:that.data.fileID,
+      success:res=>{
+        console.log("下载文件成功：", res);
+        that.setData({
+          downloadSuccess:true,
+          downloadedFilePath:res.tempFilePath,
+        })
+        wx:wx.showModal({
+          title: '文件下载成功',
+          content: '文件路径：'+ that.data.downloadedFilePath,
+          showCancel:false,
+          confirmText:'确定',
+          confirmColor:'#0000ff',
+        })
+      },
+      fail:err=>{
+        that.setData({
+          downloadSuccess:false,
+          downloadedFilePath:'',
+        })
+      },
+      complete:()=>{
+        wx.hideLoading();
+      }
+    })
+  },
+  previewImg:function(){
+    wx.previewImage({
+      urls: [this.data.downloadedFilePath],
+      current:'',
+    })
+  }
 
 
 })

@@ -1,5 +1,160 @@
 <!--edu.wxml-->
 <view class="box">
+  <view class="title">文件上传/下载</view>
+  <view class="Hcontainer">
+    <button type="primary" bindtap="doUpload">上传图片</button>
+    <button type="primary" wx:if="{{uploadSuccess}}" bindtap="doDownload">下载图片</button>
+  </view>
+  <view wx:if="{{uploadSuccess}}" class="list">
+    <text class="list-title">上传成功</text>
+    <view class="list-item">
+      <text>文件 ID ： {{fileID}}</text>
+    </view>
+    <view class="list-item">
+      <text>云文件 路径 ： {{cloudPath}}</text>
+    </view>
+  </view>
+  <view wx:if="{{downloadSuccess}}" class="list">
+    <text class="list-title">下载成功</text>
+    <text class="list-text">点击缩略图可预览图片</text>
+    <view class="image-container">
+      <image src="{{downloadedFilePath}}" mode="aspectFit" bindtap="previewImg"></image>
+    </view>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">获取OpenID</view>
+  <block wx:if="{{!hasUserInfo}}">
+    <button 
+      wx:if="{{canIUse}}" 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+    >
+    获取头像昵称
+    </button>
+    <text wx:else>请升级微信版本，使用1.3.0或以上的基础库以支持open-type按钮获取用户公开信息！</text>
+  </block>
+  <view wx:else class="userinfo">
+    <image bindtap="getDetail" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="user-openid">
+    <text>{{openID}}</text>
+    <text>{{appID}}</text>
+    <text>{{unionID}}</text>
+  </view>
+  <view class="user-detail" wx:if="{{hasUserInfo}}">
+    <text>{{detail}}</text>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">ActionSheet示例</view>
+  <button bindtap="showActionSheet" type="default">显示ActionSheet</button>
+  <view>你点击的菜单项下标是：{{tapIndex}}</view>
+  <view>你点击的菜单项是：{{tapItem}}</view>
+</view>
+
+<view class="box">
+  <view class="title">TabBar设置</view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="showTabBar" style="width:45%">显示标签</button>
+    <button type="primary"  bindtap="hideTabBar" style="width:45%">隐藏标签</button>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="setTabBarBadge" style="width:45%">设置标签</button>
+    <button type="primary"  bindtap="removeTabBarBadge" style="width:45%">删除标签</button>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="showTabBarRedDot" style="width:45%">显示红点</button>
+    <button type="primary"  bindtap="hideTabBarRedDot" style="width:45%">隐藏红点</button>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="setTabBarStyle" style="width:45%">设置整体样式</button>
+    <button type="primary"  bindtap="setTabBarItem" style="width:45%">设置单项样式</button>
+  </view>
+  <button type="primary"  bindtap="resetTabBar" style="width:95%">还原标签栏样式</button>
+</view>
+
+<view class="box">
+  <view class="title">导航栏</view>
+  <input placeholder="请输入导航栏新标题" bindblur="inputTitle"></input>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="setNavigationBarTitle" style="width:45%">设置标题</button>
+    <button type="primary"  bindtap="setNavigationBarColor" style="width:45%">设置颜色</button>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="showNavigationBarLoading" style="width:45%">加载动画</button>
+    <button type="primary"  bindtap="hideNavigationBarLoading" style="width:45%">停止动画</button>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">{{msgEqu}}获取您的设备信息</view>
+  <view class="border" hidden='{{hide1}}'>
+    <view>手机型号：{{modelEqu}}</view>  
+    <view>设备像素比：{{pixelRatioEqu}}</view>  
+    <view>屏幕宽度：{{screenWidthEqu}}</view>  
+    <view>屏幕高度：{{screenHeightEqu}}</view>  
+    <view>窗口宽度：{{windowWidthEqu}}</view>  
+    <view>窗口高度：{{windowHeightEqu}}</view>  
+    <view>微信语言：{{languageEqu}}</view>  
+    <view>微信版本：{{versionEqu}}</view>  
+    <view>操作系统版本：{{systemEqu}}</view>  
+    <view>客户端平台：{{platformEqu}}</view>  
+    <view>客户端基础库版本：{{SDKVersionEqu}}</view>  
+  </view>
+
+  <view class="border" hidden='{{hide2}}'>
+    <view>手机型号：{{modelEqu}}</view>  
+    <view>设备像素比：{{pixelRatioEqu}}</view>  
+    <view>屏幕宽度：{{screenWidthEqu}}</view>  
+    <view>屏幕高度：{{screenHeightEqu}}</view>  
+    <view>窗口宽度：{{windowWidthEqu}}</view>  
+    <view>窗口高度：{{windowHeightEqu}}</view>  
+    <view>微信语言：{{languageEqu}}</view>  
+    <view>微信版本：{{versionEqu}}</view>  
+    <view>操作系统版本：{{systemEqu}}</view>  
+    <view>客户端平台：{{platformEqu}}</view>  
+    <view>客户端基础库版本：{{SDKVersionEqu}}</view>  
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="getSystemInfoSync" style="width:45%">同步获取</button>
+    <button type="primary"  bindtap="getSystemInfo" style="width:45%">异步获取</button>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">屏幕亮度、剪贴板和振动</view>
+  <view>设置屏幕亮度</view>
+  <slider min="0" max="1" value="0.5" step="0.1" show-value="true" bindchange="setScreenBrightness"></slider>
+  <button type="primary" bindtap="getScreenBrightness">查询亮度</button>
+  <view>当前亮度为：{{brightness}}</view>
+  <switch bindchange="setKeepScreenOn">保持亮度</switch>
+  <button type="primary" bindtap="copyScreenBrightness">复制亮度</button>
+  <view>复制的亮度为：{{copyBrightness}}</view>
+</view>
+
+<view class="box">
+  <view class="title">扫码与打电话</view>
+  <button type="primary" bindtap="scanCode">开始扫码</button>
+  <view class="textLayout">
+    <text>字符集：{{resCode.charSet}}</text>
+    <text>扫码类型：{{resCode.scanType}}</text>
+    <text>扫码结果：{{resCode.result}}</text>
+  </view>
+  <view class="textLayout">
+    <input placeholder="请输入联系人姓名" bindblur="inputPhoneName"></input>
+    <input placeholder="请输入联系人电话" bindblur="inputPhoneNumber" type="number"></input>
+  </view>
+  <view class="btnLayout">
+    <button type="primary"  bindtap="makePhoneCall" style="width:45%">拨打电话</button>
+    <button type="primary"  bindtap="addPhonePerson" style="width:45%">添加联系人</button>
+  </view>
+</view>
+
+<view class="box">
   <view class="title">传感器</view>
   <view class="btnLayout">
     <button type="primary"  bindtap="startCompass">启动罗盘监听</button>
@@ -27,7 +182,6 @@
     <view>Y轴方向角速度：{{resGyroscope.x}}</view>
     <view>Z轴方向角速度：{{resGyroscope.x}}</view>
   </view>
-
 </view>
 
 <view class="box">
