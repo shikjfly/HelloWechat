@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+  "navigationBarBackgroundColor": "#1b82d2",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "微EAM系统欢迎您！"
 }

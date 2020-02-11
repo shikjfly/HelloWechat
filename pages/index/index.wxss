@@ -1,1 +1,53 @@
 /**index.wxss**/
+.bg{
+  background-color: #1b82d2;
+  height: 130px;
+}
+.region{
+  display: flex;
+  flex-direction: row;
+}
+.search{
+  width: 70%;
+  background-color: #fff;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+  font-size: 13px;
+  color: #bfbfbf;
+  align-items: center;
+}
+.left{
+  width: 90%;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.right{
+  width: 10%;
+  text-align: center;
+}
+.account, .plus{
+  width: 15%;
+  text-align: center;
+}
+.nav{
+  text-align: left;
+  margin-top: 20px;
+}
+.item{
+  margin-top: 15px;
+  text-align: center;
+  font-family: 'Microsoft YaHei';
+  font-size: 13px;
+  width: 24%;
+  display: inline-block;
+}
+.hr{
+  height: 1px;
+  background-color: #ccc;
+  opacity: 0.2;
+  margin-top: 125px;
+}

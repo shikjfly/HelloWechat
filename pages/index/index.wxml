@@ -1,5 +1,60 @@
 <!--index.wxml-->
-
-<text>
-该小程序是制作demo，让学生根据教学demo学习如何制作小程序
-</text>
+<view class="bg">
+  <!-- 蓝色背景第一行：搜索区域、用户名和加号 -->
+  <view class="region">
+    <view class="search">
+      <view class="left">
+        <image src="/images/icons/search.png" style="width:22px; height:22px;"></image>
+        <input placeholder="热门电影：神偷奶爸3"></input>
+      </view>
+      <view class="right">
+        <image src="/images/icons/mike.png" style="width:19px; height:19px;"></image>      
+      </view>
+    </view>
+    <view class="account">
+      <image src="/images/icons/me.png" style="width:19px; height:19px;"></image>
+    </view>
+    <view class="plus">
+      <image src="/images/icons/plus.png" style="width:19px; height:19px;"></image>      
+    </view>
+  </view>
+  <!-- 蓝色背景第二行：图标和文本 -->
+  <view class="nav" style="margin-top:20px;">
+    <view class="item" bindtap="navBtn">
+      <view>
+        <image src="/images/icons/scan.png" style="width:29px; height:29px;"></image>
+      </view>
+      <view style="color:#ffffff">扫一扫</view>
+    </view>
+    <view class="item" bindtap="navBtn">
+      <view>
+        <image src="/images/icons/fuqian.png" style="width:29px; height:29px;"></image>
+      </view>
+      <view style="color:#ffffff">付 钱</view>
+    </view>
+    <view class="item" bindtap="navBtn">
+      <view>
+        <image src="/images/icons/shoukuan.png" style="width:29px; height:29px;"></image>
+      </view>
+      <view style="color:#ffffff">收 钱</view>
+    </view>
+    <view class="item" bindtap="navBtn">
+      <view>
+        <image src="/images/icons/cardbag.png" style="width:29px; height:29px;"></image>
+      </view>
+      <view style="color:#ffffff">卡 包</view>
+    </view>
+  </view>
+  <!-- 白色背景：10个导航栏和背景 -->
+  <view class="nav">
+    <block wx:for='{{navs}}' wx:key='key'>
+      <view class="item" bindtap="navBtn" id="{{index}}">
+        <view>
+          <image src="{{item.img}}" style="width:{{item.width}}px; height:{{item.height}}px;"></image>
+        </view>
+        <view>{{item.name}}</view>
+      </view>
+    </block>
+  </view>
+</view>
+<view class="hr"></view>

@@ -220,9 +220,13 @@ Page({
     downloadedFilePath:'',
     uploadSuccess:false,
     downloadSuccess:false,
-
-
-
+    opName:"",
+    opResult: "",
+    opResult2: "",
+    resData: null,
+    resData2: null,
+    finished:false,
+    checkedResult:'',
   },
 
   tapVedio: function () {
@@ -1668,7 +1672,282 @@ Page({
       urls: [this.data.downloadedFilePath],
       current:'',
     })
-  }
+  },
+  addRecord: function () {
+    this.setData({
+      opName: "add",
+      finished: false
+    })
+  },
+  delRecord: function () {
+    this.setData({
+      opName: "del",
+      finished: false
+    })
+  },
+  updRecord: function () {
+    this.setData({
+      opName: "upd",
+      finished: false
+    })
+  },
+  qryRecord: function () {
+    this.setData({
+      opName: "qry",
+      finished: false
+    })
+  },
+  makeDateString: function (dateObj) {
+    return dateObj.getFullYear() + "-" + (dateObj.getMonth() + 1) + "-" + dateObj.getDate();
+  },
+  makeTimeString: function (dateObj) {
+    return dateObj.getHours() + ":" + dateObj.getMinutes()  + ":" + dateObj.getSeconds();
+  },
+  doAdd:function(e){
+    console.log(e);
+    var workContent = e.detail.value.workContent;
+    var username=e.detail.value.username;
+    var password=e.detail.value.password;
+    if(workContent!=""){
+      const db = wx.cloud.database();
+      var myDate = new Date();
+      db.collection('work_done').add({
+        data:{
+          date:this.makeDateString(myDate),
+          time:this.makeTimeString(myDate),
+          content:workContent,
+          username:username,
+          password:password,
+        },
+        complete:res=>{
+          this.setData({
+            finished:true
+          })
+        },
+        success:res=>{
+          this.setData({
+            opResult:"操作完成，新增一条记录，_id为：\n",
+            resData:res._id
+          })
+          wx.showToast({
+            title: '新增记录成功',
+          })
+          console.log('[数据库][新增记录]成功，记录 _id：', res._id);
+        },
+        fail:err=>{
+          wx.showToast({
+            title: '新增记录失败',
+            icon:'none'
+          })
+          console.error('[数据库][新增记录]失败：', err);
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '请输入事情描述！',
+      })
+    }
+  },
+  doDelete:function(e){
+    console.log(e);
+    var that = this;
+    var itemID = e.detail.value.itemID;
+    if(itemID != ""){
+      const db = wx.cloud.database();
+      db.collection('work_done').doc(itemID).get({
+        success:res=>{
+          console.log(res);
+          this.setData({
+            opResult:'查询记录成功: \n',
+            resData:res.data
+          })
+          db.collection('work_done').doc(itemID).remove({
+            complete:res=>{
+              that.setData({
+                finished:true
+              })
+            },
+            success: res => {
+              console.log('[数据库][删除记录]成功：', res);
+              that.setData({
+                opResult2:'已成功删除上面的记录。'
+              })
+            },
+            fail: err => {
+              wx.showToast({
+                title: '删除记录失败',
+                icon: 'none'
+              })
+              console.error('[数据库][删除记录]失败：', err);
+            }
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '查询记录失败',
+            icon: 'none'
+          })
+          console.error('[数据库][查询记录]失败：', err);
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '请输入itemID!',
+      })
+    }
+  },
+  doUpdate:function(e){
+    console.log(e);
+    var that  = this;
+    var itemID = e.detail.value.itemID;
+    var workContent = e.detail.value.workContent;
+    var username = e.detail.value.username;
+    var password = e.detail.value.password;
+    if (itemID != "") {
+      const db = wx.cloud.database();
+      db.collection('work_done').doc(itemID).get({
+        success: res => {
+          this.setData({
+            opResult: '查询记录成功: \n',
+            resData: res.data
+          })
+          db.collection('work_done').doc(itemID).update({
+            data:{
+              content:workContent,
+              username:username,
+              password:password,
+            },
+            complete: res => {
+              that.setData({
+                finished: true
+              })
+            },
+            success: res => {
+              console.log('[数据库][更新记录]成功：', res);
+              that.setData({
+                opResult2: '已成功更新上面的记录内容为：\n',
+                resData2:workContent
+              })
+            },
+            fail: err => {
+              wx.showToast({
+                title: '更新记录失败',
+                icon: 'none'
+              })
+              console.error('[数据库][更新记录]失败：', err);
+            }
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '查询记录失败',
+            icon: 'none'
+          })
+          console.error('[数据库][查询记录]失败：', err);
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '请输入itemID!',
+      })
+    }
+  },
+  doQuery:function(e){
+    console.log(e);
+    var workDate = e.detail.value.workDate;
+    if(workDate != ""){
+      const db = wx.cloud.database();
+      db.collection("work_done").where({
+        date:workDate
+      }).get({
+        complete: res => {
+          this.setData({
+            finished: true
+          })
+        },
+        success: res => {
+          this.setData({
+            opResult: '操作完成，查询到' + res.data.length +'条记录：\n',
+            resData: res.data
+          })
+          console.log('[数据库][查询记录]成功：', res)
+        },
+        fail: err => {
+          wx.showToast({
+            title: '查询记录失败',
+            icon: 'none'
+          })
+          console.error('[数据库][查询记录]失败：', err);
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '请输入查询日期',
+      })
+    }
+  },
+  callFunction: function (e) {
+    console.log('点击参数e：', e);
+    var that = this;
+    const username = e.detail.value.username, password = e.detail.value.password;
+    console.log('username：' + username);    
+    console.log('password：' + password);
+    if(username > ''){
+      wx.showLoading({
+        title: '调用checkUser。。。',
+      });
+      wx.cloud.callFunction({
+        name:'checkUser',
+        data:{
+          username:username,
+          password:password
+        },
+        complete:res=>{
+          wx.hideLoading();
+        },
+        success:res=>{
+          console.log('[云函数][checkUser]调用成功', res);
+          that.setData({
+            checkedResult:res.result
+          })
+        },
+        fail: err => {
+          console.error('[云函数][checkUser]调用失败', err)
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '用户名不能为空！',
+      })
+    }
+  },
 
+  testJson: function() {
+    var that = this
+    wx.showLoading({
+      title: '加载中...',
+    });
+    wx.request({
+      url: 'https://api.inews.qq.com/newsqa/v1/query/pubished/daily/list?province=%E6%B9%96%E5%8C%97',
+      headers:{
+        'Content-Type':'application/json; charset=utf-8'
+      },
+      success: res => {
+        console.log(res)
+        console.log(res.data.data)
+        console.log(res.data.data[0])
+        console.log(res.data.data[0].confirm)
+        console.log(res.data.data[0].country)
+        console.log(res.data.data[0].date)
+        that.setData({
+          checkedResult: res.data.data
+        })
+      },
+      complete: res => {
+        wx.hideLoading();
+      },
+    })
+
+  }
 
 })

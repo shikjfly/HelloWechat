@@ -405,4 +405,98 @@ map{
   margin-top: 20rpx;
   border: 1px solid #e0e0e0;
 }
-
+.preNote{
+  padding: 20px;
+  font-size: 32rpx;
+  line-height: 40rpx;
+  color: #666;
+  box-sizing: border-box;
+}
+.DBbutton{
+  width: 100rpx;
+  color: white;
+  background-color: blue;
+}
+.record-op{
+  margin: 10rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+.op-note{
+  color: #000;
+  font-size: 14px;
+}
+.content-input{
+  width: 90%;
+  padding: 20rpx;
+  margin: 20rpx;
+  min-height: 200rpx;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.op-result{
+  padding: 10rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.op-result .headline{
+  margin-top: 50rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: blue;
+}
+.op-result .text-title{
+  margin-top: 20rpx;
+  margin-bottom: 10rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  font-size: 14px;
+  color: red;
+}
+.op-result .list{
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: black;
+  display: block;
+}
+.line-input{
+  min-height: 30px;
+  line-height: 20px;
+  width: 100%;
+  padding: 5px;
+  margin: 10px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.Hcontainer2{
+  margin: 10rpx 0;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+.Vcontainer2{
+  margin: 60rpx 0 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+.input-label2{
+  width: 150rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+.line-input2{
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.op-result2{
+  padding: 10rpx;
+  color: blue;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}

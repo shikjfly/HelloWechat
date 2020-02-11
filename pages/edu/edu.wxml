@@ -1,4 +1,130 @@
-<!--edu.wxml-->
+<!--temple
+<view class="box">
+  <view class="title"></view>
+</view>
+-->
+
+<view class="box">
+  <view class="title">tup </view>
+  ---<image src="/images/icons/search.png" style="width:19px; height:19px;"></image>---
+  ===
+  <image src="/images/icons/search.png" style="width:19px; height:19px;"></image>===
+</view>
+
+
+<view class="box">
+  <view class="title">json数据测试</view>
+  <button type="primary" bindtap="testJson">test</button>
+  <text>{{checkedResult}}</text>
+  <view wx:for="{{checkedResult}}" wx:key="key">
+    <view>日期：{{item.date}}--{{item.province}}确诊人数：{{item.confirm}}</view>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">云函数</view>
+  <form bindsubmit="callFunction">
+    <view class="Vcontainer2">
+      <view class="Hcontainer2">
+        <text class="input-label2">用户名：</text>
+        <input class="line-input2" placeholder="此处请输入用户名" placeholder-class="placeholder" type="text" name="username" maxlength="16"></input>
+      </view>
+      <view class="Hcontainer2">
+        <text class="input-label2">密码：</text>
+        <input class="line-input2" placeholder="此处请输入密码" placeholder-class="placeholder" type="password" name="password" maxlength="16"></input>
+      </view>
+    </view>
+    <view style="height:150rpx;">
+      <button type="primary" form-type="submit">提交</button>
+    </view>
+  </form>
+  <view class="op-result2">
+    云函数返回结果： <text>{{checkedResult}}</text>
+  </view>
+</view>
+
+<view class="box">
+  <view class="title">数据库操作</view>
+  <text class="preNote">请点击相应按钮，实现在数据库中增加、删除、更新或查询记录的操作！</text>
+  <view class="Hcontainer">
+    <button class="DBbutton" bindtap="addRecord" style="background-color:{{opName=='add'?'#ae57a4':'blue'}}">增</button>
+    <button class="DBbutton" bindtap="delRecord" style="background-color:{{opName=='del'?'#ae57a4':'blue'}}">删</button>
+    <button class="DBbutton" bindtap="updRecord" style="background-color:{{opName=='upd'?'#ae57a4':'blue'}}">改</button>
+    <button class="DBbutton" bindtap="qryRecord" style="background-color:{{opName=='qry'?'#ae57a4':'blue'}}">查</button>
+  </view>
+  <view wx:if="{{opName=='add'}}">
+    <view class="record-op" style='{{opName!="" ? "border:1px solid #00007f" : ""}}'>
+      <form bindsubmit="doAdd">
+        <text class="op-note">添加一件今日已经完成的工作：</text>
+        <textarea name="workContent" class="content-input" maxlength="50" placeholder="事情描述（不超过50个字）" auto-height adjust-position cursor-spacing="20px"></textarea>        
+        <text class="op-note">用户名：</text>
+        <input class="line-input2" placeholder="此处请输入用户名" placeholder-class="placeholder" type="text" name="username" maxlength="16"></input>      
+        <text class="op-note">密码：</text>
+        <input class="line-input2" placeholder="此处请输入密码" placeholder-class="placeholder" type="password" name="password" maxlength="16"></input>
+        <button form-type="submit" type="primary">确定</button>
+      </form>
+    </view>
+    <view wx:if="{{finished}}" class="op-result">
+      <text class="headline">操作结果信息:</text>
+      <text class="text-title">{{opResult}}</text>
+      <text class="list" selectable>{{resData}}</text>
+    </view>
+  </view>
+  <view wx:if="{{opName=='del'}}">
+    <view class="record-op" style='{{opName!="" ? "border:1px solid #00007f" : ""}}'>
+      <form bindsubmit="doDelete">
+        <text class="op-note">指定删除item的ID：</text>
+        <input name="itemID" class="line-input" maxlength="32" placeholder="itemID（32位字符串）"></input>
+        <button form-type="submit" type="primary">确定</button>
+      </form>
+    </view>
+    <view wx:if="{{finished}}" class="op-result">
+      <text class="headline">操作结果信息:</text>
+      <text class="text-title">{{opResult}}</text>
+      <text class="list" selectable>{{resData._id}}:{{resData.date}}{{resData.time}}{{resData.content}}</text>        
+      <text class="text-title">{{opResult2}}</text>
+    </view>
+  </view>
+  <view wx:if="{{opName=='upd'}}">
+    <view class="record-op" style='{{opName!="" ? "border:1px solid #00007f" : ""}}'>
+      <form bindsubmit="doUpdate">
+        <text class="op-note">指定更新item的ID：</text>
+        <input name="itemID" class="line-input" maxlength="32" placeholder="itemID（32位字符串）"></input>
+        <text class="op-note">输入更新的内容：</text>
+        <textarea name="workContent" class="content-input" maxlength="50" placeholder="事情描述（不超过50个字）" auto-height adjust-position cursor-spacing="20px"></textarea>     
+        <text class="op-note">用户名：</text>
+        <input class="line-input2" placeholder="此处请输入用户名" placeholder-class="placeholder" type="text" name="username" maxlength="16"></input>      
+        <text class="op-note">密码：</text>
+        <input class="line-input2" placeholder="此处请输入密码" placeholder-class="placeholder" type="password" name="password" maxlength="16"></input>
+        <button form-type="submit" type="primary">确定</button>
+      </form>
+    </view>
+    <view wx:if="{{finished}}" class="op-result">
+      <text class="headline">操作结果信息:</text>
+      <text class="text-title">{{opResult}}</text>
+      <text class="list" selectable>{{resData._id}}:{{resData.date}}{{resData.time}}{{resData.content}}</text>        
+      <text class="text-title">{{opResult2}}</text>
+      <text class="list" selectable>{{resData2}}</text>
+    </view>
+  </view>
+  <view wx:if="{{opName=='qry'}}">
+    <view class="record-op" style='{{opName!="" ? "border:1px solid #00007f" : ""}}'>
+      <form bindsubmit="doQuery">
+        <text class="op-note">指定查询的日期（年-月-日，0不用写）：</text>
+        <input name="workDate" class="line-input" maxlength="10" placeholder="事件日期（年-月-日)"></input>
+        <button form-type="submit" type="primary">确定</button>
+      </form>
+    </view>
+    <view wx:if="{{finished}}" class="op-result">
+      <text class="headline">操作结果信息:</text>
+      <text class="text-title">{{opResult}}</text>
+      <block wx:for='{{resData}}' wx:key='key'>  
+        <text class="list" selectable>_id是：{{item._id}} \n 日期：{{item.date}}\n 时间：{{item.time}}\n 内容：{{item.content}}\n 用户：{{item.username}}\n 密码：{{item.password}}</text>       
+      </block>
+    </view>
+  </view>
+</view>
+
 <view class="box">
   <view class="title">文件上传/下载</view>
   <view class="Hcontainer">
