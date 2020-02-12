@@ -1,8 +1,10 @@
 {
   "pages": [
-    "pages/edu/edu",
+    "pages/calc/calc",
     "pages/index/index",
+    "pages/edu/edu",
     "pages/detail4/detail4",
+    "pages/calList/calList",
     "pages/us/us"
   ],
   "window": {
@@ -28,6 +30,12 @@
         "text": "教学",
         "iconPath": "/images/edu-off.png",
         "selectedIconPath": "/images/edu-on.png"
+      },
+      {
+        "pagePath": "pages/calc/calc",
+        "text": "计算",
+        "iconPath": "/images/cal-off.png",
+        "selectedIconPath": "/images/cal-on.png"
       },
       {
         "pagePath": "pages/us/us",

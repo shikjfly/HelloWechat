@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 const app = getApp()
-// pages/layout/layout.js
 Page({
 
   /**
@@ -30,11 +29,17 @@ Page({
       mask: true,
     })
   },
+  eduBtn:function(){
+    wx.switchTab({
+      url: '../edu/edu',
+    })
+  },
   loadNavData: function () {
     var navs = [];
     var navs0 = new Object();
-    navs0.img = "/images/icons/car.png";
-    navs0.name = "打车";
+    navs0.img = "/images/icons/edu.png";
+    navs0.name = "教学";
+    navs0.bindtap = "eduBtn"
     navs0.width = "25";
     navs0.height = "25";
     navs[0] = navs0;
@@ -74,6 +79,12 @@ Page({
     navs6.width = "25";
     navs6.height = "25";
     navs[6] = navs6;
+    var navs7 = new Object();
+    navs7.img = "/images/icons/car.png";
+    navs7.name = "打车";
+    navs7.width = "25";
+    navs7.height = "25";
+    navs[7] = navs7;
 
     return navs;
   }

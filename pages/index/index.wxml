@@ -5,7 +5,7 @@
     <view class="search">
       <view class="left">
         <image src="/images/icons/search.png" style="width:22px; height:22px;"></image>
-        <input placeholder="热门电影：神偷奶爸3"></input>
+        <input placeholder="搜索设备名称、编号..."></input>
       </view>
       <view class="right">
         <image src="/images/icons/mike.png" style="width:19px; height:19px;"></image>      
@@ -48,7 +48,7 @@
   <!-- 白色背景：10个导航栏和背景 -->
   <view class="nav">
     <block wx:for='{{navs}}' wx:key='key'>
-      <view class="item" bindtap="navBtn" id="{{index}}">
+      <view class="item" bindtap="{{item.bindtap}}" id="{{index}}">
         <view>
           <image src="{{item.img}}" style="width:{{item.width}}px; height:{{item.height}}px;"></image>
         </view>
@@ -57,4 +57,4 @@
     </block>
   </view>
 </view>
-<view class="hr"></view>
+<!-- <view class="hr"></view> -->
