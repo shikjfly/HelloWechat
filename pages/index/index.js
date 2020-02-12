@@ -34,6 +34,16 @@ Page({
       url: '../edu/edu',
     })
   },
+  calcuBtn:function(){
+    wx.showLoading({
+      title: 'loading',
+      duration: 1000,
+    })
+    wx.navigateTo({
+      url: '../calc/calc',
+    })
+    wx.hideLoading();
+  },
   loadNavData: function () {
     var navs = [];
     var navs0 = new Object();
@@ -44,8 +54,9 @@ Page({
     navs0.height = "25";
     navs[0] = navs0;
     var navs1 = new Object();
-    navs1.img = "/images/icons/plane.png";
-    navs1.name = "机票";
+    navs1.img = "/images/cal-on.png";
+    navs1.name = "计算器";
+    navs1.bindtap = "calcuBtn"
     navs1.width = "25";
     navs1.height = "25";
     navs[1] = navs1;

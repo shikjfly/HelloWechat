@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/calc/calc",
     "pages/index/index",
     "pages/edu/edu",
     "pages/detail4/detail4",
@@ -9,7 +8,7 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#d9eef7",
     "navigationBarTitleText": "微EAM系统欢迎您",
     "navigationBarTextStyle": "black"
   },
@@ -30,12 +29,6 @@
         "text": "教学",
         "iconPath": "/images/edu-off.png",
         "selectedIconPath": "/images/edu-on.png"
-      },
-      {
-        "pagePath": "pages/calc/calc",
-        "text": "计算",
-        "iconPath": "/images/cal-off.png",
-        "selectedIconPath": "/images/cal-on.png"
       },
       {
         "pagePath": "pages/us/us",
