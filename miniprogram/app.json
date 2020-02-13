@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/calc/calc",
+    "pages/edu/edu",
+    "pages/detail4/detail4",
+    "pages/calcList/calcList",
+    "pages/us/us"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#d9eef7",
+    "navigationBarTitleText": "微EAM系统欢迎您",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "tabBar":{
+    "color":"#000",
+    "selectedColor":"#00f",
+    "list":[
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/images/home-off.png",
+        "selectedIconPath": "/images/home-on.png"
+      },
+      {
+        "pagePath": "pages/edu/edu",
+        "text": "教学",
+        "iconPath": "/images/edu-off.png",
+        "selectedIconPath": "/images/edu-on.png"
+      },
+      {
+        "pagePath": "pages/calc/calc",
+        "text": "计算器",
+        "iconPath": "/images/calc-off.png",
+        "selectedIconPath": "/images/calc-on.png"
+      },
+      {
+        "pagePath": "pages/us/us",
+        "text": "关于我们",
+        "iconPath": "/images/us-off.png",
+        "selectedIconPath": "/images/us-on.png"
+      }
+    ]
+  }
+}

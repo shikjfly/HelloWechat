@@ -1,0 +1,6 @@
+<!--pages/calList/calList.wxml-->
+<view class="content">
+  <block wx:for="{{logs}}" wx:for-item="log" wx:key='key'>
+    <view class="item">{{log}}</view>
+  </block>
+</view>
