@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/equip/equip",
+    "pages/repair/repair",
     "pages/calc/calc",
     "pages/edu/edu",
     "pages/detail4/detail4",
@@ -10,7 +12,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#d9eef7",
-    "navigationBarTitleText": "微EAM系统欢迎您",
+    "navigationBarTitleText": "微EAM报修系统欢迎您！",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
@@ -26,16 +28,22 @@
         "selectedIconPath": "/images/home-on.png"
       },
       {
+        "pagePath": "pages/equip/equip",
+        "text": "设备",
+        "iconPath": "/images/equi-off.png",
+        "selectedIconPath": "/images/equi-on.png"
+      },
+      {
+        "pagePath": "pages/repair/repair",
+        "text": "报修",
+        "iconPath": "/images/repair-off.png",
+        "selectedIconPath": "/images/repair-on.png"
+      },
+      {
         "pagePath": "pages/edu/edu",
         "text": "教学",
         "iconPath": "/images/edu-off.png",
         "selectedIconPath": "/images/edu-on.png"
-      },
-      {
-        "pagePath": "pages/calc/calc",
-        "text": "计算器",
-        "iconPath": "/images/calc-off.png",
-        "selectedIconPath": "/images/calc-on.png"
       },
       {
         "pagePath": "pages/us/us",

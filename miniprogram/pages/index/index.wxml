@@ -28,21 +28,21 @@
     </view>
     <view class="item" bindtap="navBtn">
       <view>
-        <image src="/images/icons/fuqian.png" style="width:29px; height:29px;"></image>
+        <image src="/images/icons/equip.png" style="width:29px; height:29px;"></image>
       </view>
-      <view style="color:#ffffff">付 钱</view>
+      <view style="color:#ffffff">设 备</view>
     </view>
     <view class="item" bindtap="navBtn">
       <view>
-        <image src="/images/icons/shoukuan.png" style="width:29px; height:29px;"></image>
+        <image src="/images/icons/fuqian.png" style="width:29px; height:29px;"></image>
       </view>
-      <view style="color:#ffffff">收 钱</view>
+      <view style="color:#ffffff">二维码</view>
     </view>
     <view class="item" bindtap="navBtn">
       <view>
         <image src="/images/icons/cardbag.png" style="width:29px; height:29px;"></image>
       </view>
-      <view style="color:#ffffff">卡 包</view>
+      <view style="color:#ffffff">文 件</view>
     </view>
   </view>
   <!-- 白色背景：10个导航栏和背景 -->
