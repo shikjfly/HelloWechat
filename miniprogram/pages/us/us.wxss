@@ -1,15 +1,26 @@
 /* pages/us/us.wxss */
-.header{
-  margin: 20rpx;
-  color: blue;
-  font-size: 22px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+page{
+  background-color: #d9eef7;
+}
+.flex-wrap{
+  margin: 10px;
+}
+.item{
+  border-bottom: 1px solid lightgray;
+  padding: 10px;
+}
+.key, .value{  
+  margin: 10px 0;
+  text-align: left;
+  font-family: 'Microsoft YaHei';
+  font-size: 16px;
+  width: 48%;
+  display: inline-block;
 }
 .footer{
-  margin: 20rpx;
-  font-size: 14px;
+  margin-top: 50rpx;
+  font-size: 12px;
   text-align: center;
   flex: 0 0 auto;
+  color: rgb(180, 170, 170);
 }

@@ -1,1 +1,82 @@
-/* pages/equip/equip.wxss */
+/**index.wxss**/
+.search{
+  width: 92%;
+  background-color: rgb(241, 241, 241);
+  margin: 10px 20px;
+  border-radius:42px;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  align-items: center;
+  height: 42px;
+}
+.left{
+  width: 90%;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.right{
+  width: 10%;
+  text-align: center;
+  margin-right: 10px;
+}
+
+/* 所有设备 */
+.wrap{
+  display: flex;
+  flex-direction: column;
+}
+/* 单个设备图片+设备文字信息+箭头 */
+.equip{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
+/*设备图片  */
+.equip-thumbnail{
+  width: 20%
+}
+image{
+  width: 65px;
+  height: 65px;
+}
+/* 设备文字信息 */
+.equip-abbr{
+  margin-left: 10px;
+  width: 70%
+}
+/* 单条设备信息 */
+.equip-alone{
+  display: flex;
+  flex-direction: row;
+  color: rgb(167, 162, 162);
+  margin: 10px 0;
+  font-size: 14px;
+}
+.equip-key{
+  margin-right: 10px;
+}
+
+/* 箭头 */
+.arrow{
+  margin-left: 5px;
+  width: 5%;
+}
+
+/* 新增按钮 */
+.addBtn{
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  border-radius: 55px;
+  line-height: 55px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  background-color: rgb(158, 155, 155);
+}

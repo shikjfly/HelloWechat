@@ -35,7 +35,7 @@ Page({
     })
   },
   calcBtn:function(){
-    wx.switchTab({
+    wx.navigateTo({
       url: '../calc/calc',
     })
   },

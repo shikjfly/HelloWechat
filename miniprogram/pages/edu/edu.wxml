@@ -3,15 +3,6 @@
   <view class="title"></view>
 </view>
 -->
-
-<view class="box">
-  <view class="title">tup </view>
-  ---<image src="/images/icons/search.png" style="width:19px; height:19px;"></image>---
-  ===
-  <image src="/images/icons/search.png" style="width:19px; height:19px;"></image>===
-</view>
-
-
 <view class="box">
   <view class="title">json数据测试</view>
   <button type="primary" bindtap="testJson">test</button>

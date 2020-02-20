@@ -1,2 +1,75 @@
 <!--pages/equip/equip.wxml-->
-<text>pages/equip/equip.wxml</text>
+<view class="bg">
+  <!-- 第一行：搜索区域及二维码功能 -->
+  <view class="search">      
+    <view class="left">
+      <image src="/images/icons/search.png" style="width:22px; height:22px;"></image>
+      <input class='search_input' name="search" bindconfirm='search_function' type='text' confirm-type='search' placeholder="搜索设备名称、编号"></input>
+    </view>
+    <view class="right">
+      <image src="/images/icons/fuqian.png" style="width:22px; height:22px;"></image>      
+    </view>
+  </view>
+  <!-- end 搜索区域 -->
+
+  <!-- 设备区域 -->
+  <view class="wrap">
+    <!-- //第一个设备 -->
+    <view class="equip">
+      <!-- 图片 -->
+      <view class="equip-thumbnail">
+        <image src="/images/icons/scan.png" mode="scaleToFill"></image>
+      </view>
+      <!--设备信息 -->
+      <view class="equip-abbr">
+        <view>
+          <view class="equip-name">设备名称</view>
+        </view>
+        <view class="equip-alone">
+          <view class="equip-key">设备编码:</view>
+          <view class="equip-value">2465006997</view>
+        </view>
+        <view class="equip-alone">
+          <view class="equip-key">备注:</view>
+          <view class="equip-value">这一条是写死的数据...</view>
+        </view>
+      </view>
+      <!--箭头 -->
+      <view class="arrow">
+        <image src="/images/right-arrow.png" style="width:20px; height:20px;"></image>
+      </view>
+    </view>
+    <!-- end one设备 -->
+    <!-- //第N个设备 -->
+    <view class="equip" wx:for='{{resData}}' wx:key='key'>
+      <!-- 图片 -->
+      <view class="equip-thumbnail">
+        <image src="{{item.equip_fileID}}" mode="scaleToFill"></image>
+      </view>
+      <!--设备信息 -->
+      <view class="equip-abbr">
+        <view>
+          <view class="equip-name">{{item.equip_name}}</view>
+        </view>
+        <view class="equip-alone">
+          <view class="equip-key">设备编码:</view>
+          <view class="equip-value">{{item.equip_code}}</view>
+        </view>
+        <view class="equip-alone">
+          <view class="equip-key">备注:</view>
+          <view class="equip-value">{{item.equip_comment}}</view>
+        </view>
+      </view>
+      <!--箭头 -->
+      <view class="arrow">
+        <image src="/images/right-arrow.png" style="width:20px; height:20px;"></image>
+      </view>
+    </view>
+    <!-- end N设备 -->
+
+  </view>
+  <!-- end 所有设备信息 -->
+
+  <view class="addBtn" bindtap="addEquip">+</view>
+  <!-- end 新增按钮 -->
+</view>

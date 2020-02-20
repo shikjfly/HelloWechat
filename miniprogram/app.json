@@ -1,13 +1,14 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/equip/equip",
+    "pages/equip_add/equip_add",
     "pages/repair/repair",
+    "pages/us/us",
+    "pages/index/index",
     "pages/calc/calc",
     "pages/edu/edu",
     "pages/detail4/detail4",
-    "pages/calcList/calcList",
-    "pages/us/us"
+    "pages/calcList/calcList"
   ],
   "window": {
     "backgroundTextStyle": "light",

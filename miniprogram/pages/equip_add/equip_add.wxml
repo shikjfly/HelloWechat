@@ -1,0 +1,32 @@
+<view>
+    <view >
+      <form bindsubmit="doAdd">   
+        <!-- 设备名称、编码、备注 -->  
+        <text class="equip-note">设备名称：</text>
+        <input class="line-input" placeholder="此处请输入设备名称" placeholder-class="placeholder" type="text" name="equip_name" maxlength="16"></input>           
+        <text class="equip-note">设备编码：</text>
+        <input class="line-input" placeholder="此处请输入设备编码" placeholder-class="placeholder" type="text" name="equip_code" maxlength="16"></input>        
+        <text class="equip-note">备注：</text>
+        <textarea name="equip_comment" class="content-input" maxlength="50" placeholder="备注描述（不超过50个字）" auto-height adjust-position cursor-spacing="20px"></textarea>              
+        
+        <!-- 图片添加、预览、删除 -->
+        <text class="equip-note">设备图片：</text>
+        <view class='imgBox'>
+          <image class='imgList' src='{{tempFilePaths}}' bindtap="previewImg"  wx:if="{{isShowImg}}" >
+            <icon class='imgCancel' type="clear" size='25' catchtap="deleteImg"></icon>
+          </image>
+          <image src='/images/addImg1.png' bindtap='addImg' wx:if="{{isShowAdd}}" ></image>
+        </view>        
+        <!-- end 图片添加、预览、删除 -->
+        
+        <!-- 按钮区域（重置/确定） -->
+        <view class="btnArea">
+          <button form-type="reset" type="default" class="btn">重置</button>
+          <button form-type="submit" type="primary" class="btn">确定</button>
+        </view>
+        <!-- 测试区域 -->
+        <view>{{fileID}}</view>
+
+      </form>
+    </view>
+  </view>
