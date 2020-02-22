@@ -2,6 +2,7 @@
   "pages": [
     "pages/equip/equip",
     "pages/equip_add/equip_add",
+    "pages/equip_detail/equip_detail",
     "pages/repair/repair",
     "pages/us/us",
     "pages/index/index",

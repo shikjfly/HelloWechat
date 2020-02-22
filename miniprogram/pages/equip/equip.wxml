@@ -40,14 +40,15 @@
       </view>
     </view>
     <!-- end one设备 -->
+
     <!-- //第N个设备 -->
-    <view class="equip" wx:for='{{resData}}' wx:key='key'>
+    <view class="equip" wx:for='{{resData}}' wx:for-item="item" wx:key='key'>
       <!-- 图片 -->
       <view class="equip-thumbnail">
-        <image src="{{item.equip_fileID}}" mode="scaleToFill"></image>
+        <image src="{{item.equip_fileID}}" data-index="{{index}}" mode="scaleToFill" bindtap="previewImg"></image>
       </view>
       <!--设备信息 -->
-      <view class="equip-abbr">
+      <view class="equip-abbr" bindtap="doDetail"  data-index="{{index}}">
         <view>
           <view class="equip-name">{{item.equip_name}}</view>
         </view>

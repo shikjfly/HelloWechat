@@ -1,0 +1,26 @@
+<view>
+  <!-- 设备名称、编码、备注 -->  
+  <text class="equip-note">设备名称：</text>
+  <input class="line-input" placeholder="{{options.equip_name}}" placeholder-class="placeholder" type="text" name="equip_name" maxlength="16" disabled="true"></input>
+
+  <text class="equip-note">设备编码：</text>
+  <input class="line-input" placeholder="{{options.equip_code}}" placeholder-class="placeholder" type="text" name="equip_code" maxlength="16" disabled="true"></input>    
+
+  <text class="equip-note">创建日期：</text>
+  <input class="line-input" placeholder="{{options.dateTime}}" placeholder-class="placeholder" type="text" name="equip_code" maxlength="16" disabled="true"></input>        
+
+  <text class="equip-note">备注：</text>
+  <textarea name="equip_comment" class="content-input" maxlength="50" placeholder="{{options.equip_comment}}" auto-height adjust-position cursor-spacing="20px" disabled="true"></textarea>   
+
+  <text class="equip-note">设备图片：</text>
+  <view class='imgBox'>
+    <image class='imgList' src='{{options.equip_fileID}}' mode="aspectFit" bindtap="previewImg">
+    </image>
+  </view>
+  <!-- 按钮区域（重置/确定） -->
+  <view class="btnArea">
+    <button form-type="reset" type="default" class="btn" bindtap="doDelete">删除</button>
+    <button form-type="submit" type="primary" class="btn" bindtap="doSure">确定</button>
+  </view>
+
+</view>

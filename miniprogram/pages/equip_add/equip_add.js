@@ -4,19 +4,43 @@ Page({
     // 图片添加、预览、删除
     isShowAdd:true,
     isShowImg:false,
-    // end 图片添加、预览、删除
   },
+
   // 格式：2020-12-16 16:40
   makeDateTimeString: function (dateObj) {
     return dateObj.getFullYear() + "-" + (dateObj.getMonth() + 1) + "-" + dateObj.getDate() +" "+ dateObj.getHours() + ":" + dateObj.getMinutes() + ":" + dateObj.getSeconds();
-  },  
+  },
+
   // 新增设备信息
   doAdd:function(e){
-    var tempFilePaths = this.data.tempFilePaths;
-    if (tempFilePaths == undefined || tempFilePaths.length == 0) { //判断没有上传图片，或者删除图片之后，用默认图片替代
-      tempFilePaths = [];
-      tempFilePaths[0] = 'cloud://xshi-xzhao.7873-xshi-xzhao-1257979959/imgNo2.png';
-    } else{
+    var tempFilePaths = this.data.tempFilePaths;       
+    if (e.detail.value.equip_name != '' && e.detail.value.equip_code != ''){ //必须输入设备名称和编码...
+    
+      if (tempFilePaths == undefined || tempFilePaths.length == 0) { //判断没有上传图片，或者删除图片之后，用默认图片替代
+        tempFilePaths = [];
+        tempFilePaths[0] = 'cloud://xshi-xzhao.7873-xshi-xzhao-1257979959/imgNo2.png';
+        var filePath = tempFilePaths[0]; // **存入的是缓存地址**
+        // 存入数据库
+        var myDate = new Date();
+        wx.cloud.database().collection('equipments').add({
+          data: {
+            dateTime: this.makeDateTimeString(myDate),
+            equip_name: e.detail.value.equip_name,
+            equip_code: e.detail.value.equip_code,
+            equip_comment: e.detail.value.equip_comment,
+            equip_fileID: filePath
+          },
+          success: res => {
+            wx.navigateBack({
+              delta: 1,
+            });
+          }
+        })
+        // end.传到数据库
+      } 
+
+
+
       // 图片文件上传云空间，调用uploadFile接口      
       var filePath = tempFilePaths[0];
       var cloudPath = 'equip' + Date.now() + filePath.match(/\.[^.]+?$/)[0];
@@ -24,47 +48,32 @@ Page({
         cloudPath,
         filePath,
         success: res => {
-          this.setData({
-            filePath: res.fileID,
-          });
-          console.log('upload-xxxxxxxxxxxxxxeID', res)
-          filePath = res.fileID;
-        },
-        fail: e => {
-          console.log(e)
+          filePath = res.fileID; // **这是是重点**，存入数据库的图片地址是云开发的图片地址
+          // 存入数据库
+          var myDate = new Date();
+          wx.cloud.database().collection('equipments').add({
+            data: {
+              dateTime: this.makeDateTimeString(myDate),
+              equip_name: e.detail.value.equip_name,
+              equip_code: e.detail.value.equip_code,
+              equip_comment: e.detail.value.equip_comment,
+              equip_fileID: filePath
+            },
+            success: res => {
+              wx.navigateBack({
+                delta: 1,
+              });
+            }
+          }) 
+          // end.传到数据库
         },
       })
-    }   
-
-    if (e.detail.value.equip_name != '' && e.detail.value.equip_code != '') {
-      console.log(filePath)
-      var myDate = new Date();
-      wx.cloud.database().collection('equipments').add({
-        data: {
-          dateTime: this.makeDateTimeString(myDate),
-          equip_name: e.detail.value.equip_name,
-          equip_code: e.detail.value.equip_code,
-          equip_comment: e.detail.value.equip_comment,    
-          equip_fileID: filePath              
-        },        
-        success:res=>{
-          wx.showToast({
-            title: '新增成功',
-            // icon:'none',
-          });
-          setTimeout(function(){ //加了一个定时器，1秒之后跳转
-            wx.navigateBack({
-              delta: 1,
-            });
-          }, 500);          
-        }
-      })      
     } else {
       wx.showToast({
         title: '请输入设备名称和设备编号！',
-        icon:'none',
+        icon: 'none',
       })
-    }
+    }   
   },
   //end doAdd新增
 
@@ -80,7 +89,7 @@ Page({
           isShowAdd: false,
           isShowImg:true,
           tempFilePaths: res.tempFilePaths
-        });             
+        });
       }
     })
   },

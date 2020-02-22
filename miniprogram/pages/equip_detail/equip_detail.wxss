@@ -1,0 +1,47 @@
+/* pages/equip_add/equip_add.wxss */
+page{
+  background-color: #d9eef7;
+}
+.equip-note{
+  color: #000;
+  font-size: 14px;
+}
+.line-input{
+  min-height: 40px;
+  line-height: 40px;
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.content-input{
+  width: 90%;
+  padding: 20rpx;
+  margin: 20rpx;
+  min-height: 200rpx;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* xxxxx */
+.imgBox{
+  padding: 25rpx 0rpx;
+  margin-bottom: 45px;
+}
+/* xxxxx */
+
+/*  */
+.btnArea{
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
+}
+.btnArea .btn{
+  margin: 0px 5px;
+}

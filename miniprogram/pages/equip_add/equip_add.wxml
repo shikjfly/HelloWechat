@@ -24,9 +24,7 @@
           <button form-type="reset" type="default" class="btn">重置</button>
           <button form-type="submit" type="primary" class="btn">确定</button>
         </view>
-        <!-- 测试区域 -->
-        <view>{{fileID}}</view>
-
+        
       </form>
     </view>
   </view>

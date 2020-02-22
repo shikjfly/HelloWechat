@@ -68,13 +68,12 @@ page{
   display: flex;
   flex-direction: row;
   position: fixed;
-  bottom: 10rpx;
-  margin: 0 20rpx;
-  justify-content: space-around;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
 }
 .btnArea .btn{
-  margin: 0rpx 10rpx;
-  box-sizing: border-box;
+  margin: 0px 5px;
 }
 
 .hide{
@@ -82,7 +81,6 @@ page{
 }
 
 /* xxxxx */
-
 .imgBox{
   padding: 25rpx 0rpx;
 }
@@ -99,6 +97,4 @@ position: absolute;
 top: 0rpx;
 right: 0rpx;
 }
-
-
 /* xxxxx */
