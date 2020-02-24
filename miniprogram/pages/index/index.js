@@ -91,8 +91,14 @@ Page({
     navs7.width = "25";
     navs7.height = "25";
     navs[7] = navs7;
-
     return navs;
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   }
 
 
